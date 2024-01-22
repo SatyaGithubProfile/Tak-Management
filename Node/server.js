@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 app.use(express.json());
+require('./startup/db')();  // Connect mongo Db
+require('./startup/routes')(app);  // to initialize the routes
+
+
 
 
 const courses = [
