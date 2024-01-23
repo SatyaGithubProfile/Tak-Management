@@ -1,9 +1,15 @@
-
-<div class="container">
+<div class="container-fluid">
   <div class="row">
+
+    <app-top-nav></app-top-nav>
   </div>
-
   <div class="row">
-    <app-tasks></app-tasks>
+    <div class="col-3">
+      <app-side-nav></app-side-nav>
+    </div>
+
+    <div class="col">
+      <app-tasks></app-tasks>
+    </div>
   </div>
 </div>

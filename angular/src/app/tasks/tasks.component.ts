@@ -8,13 +8,13 @@ import { task } from '../models/tasks';
   styleUrl: './tasks.component.css'
 })
 export class TasksComponent implements OnInit {
-
+  display = "none";
   tasks: task[] = []
 
   constructor(private taskServ: TasksService) { }
 
   ngOnInit(): void {
-    this.getTasks()
+    // this.getTasks()
   }
 
   getTasks() {
@@ -26,5 +26,12 @@ export class TasksComponent implements OnInit {
 
   }
 
+
+openModal() {
+    this.display = "block";
+  }
+  onCloseHandled() {
+    this.display = "none";
+  }
 
 }
