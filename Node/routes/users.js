@@ -19,12 +19,15 @@ router.post('/', async (req, res) => {
     if (user) return res.status(405).send('User already existed!');
 
     // encrypt the password
-    user = new User(lodash.pick(req.body, ['name', 'email', 'password']))
+    user = new User(lodash.pick(req.body, ['name', 'email', 'password','isAdmin']))
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(user.password, salt);
 
+    // Create the authentication token
+    const token = user.getAuthToken();
+
     await user.save();
-    res.send(lodash.pick(user, ['_id', 'name', 'email']));
+    res.header('x-auth-token', token).send(lodash.pick(user, ['_id', 'name', 'email','isAdmin']));
 })
 
 module.exports = router;
