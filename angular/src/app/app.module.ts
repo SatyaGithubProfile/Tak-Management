@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { TopNavComponent } from './top-nav/top-nav.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
+import {  FormsModule,ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,9 @@ import { SideNavComponent } from './side-nav/side-nav.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     provideClientHydration()

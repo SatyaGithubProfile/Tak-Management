@@ -1,4 +1,5 @@
-export class task {
+export class Task {
+    _id!:string;
     name: string;
     comment: string;
 
