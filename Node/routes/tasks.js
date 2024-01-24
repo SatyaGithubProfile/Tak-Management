@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const express = require('express')
 const router = express.Router();
-const { Task, validate } = require('../models/tasks')
+const { Task, validate } = require('../models/tasks');
+const auth = require('../middleware/auth');
 
 
 
-router.get('/', async (req, res) => {
+router.get('/', [auth], async (req, res) => {
     const tasks = await Task.find().sort('name')
     res.send(tasks);
 })
