@@ -26,6 +26,7 @@ export class LoginComponent {
     subscribe(
       (resp:any) => {
        localStorage.setItem('token',  resp.token);
+       this.userServ.navHide$.next(true);
        
         this.router.navigate(['task']);
       },

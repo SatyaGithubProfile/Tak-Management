@@ -18,6 +18,7 @@ class Permissions {
 
 
 export class AuthService implements CanActivate {
+
   constructor(private router : Router ) {
   }
 
@@ -25,7 +26,6 @@ export class AuthService implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean|UrlTree>|Promise<boolean|UrlTree>|boolean|UrlTree {
-    console.log(!this.isAuthenticated())
    if (!this.isAuthenticated()) {
       // this.router.navigate(['login']);
       this.router.navigate([`login`]);

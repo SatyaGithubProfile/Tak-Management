@@ -45,7 +45,6 @@ export class TasksComponent implements OnInit {
     if(this.editEnable) return this.onEdit();
     const holdTask = new Task(this.taskForm.value.name || '', this.taskForm.value.comment || '')
     this.taskServ.postTask(holdTask).subscribe((result) => {
-      console.log(result);
       this.tasks.push(result);
       this.onCloseHandled();
       this.alerServ.successAlert();

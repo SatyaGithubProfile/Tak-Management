@@ -1,32 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Registration, User } from '../models/user';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Environment } from '../environment';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  header:any;
+  navHide$ = new BehaviorSubject<boolean>(false);  // To hide the navigation on logout
 
-  constructor(private http: HttpClient, private router:Router) {
-    this.header=new HttpHeaders();
-    this.header=this.header.append('ContentType','application/json');
-    this.header=this.header.append('Accept','application/json');
-
-   }
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(user: User) {
-     return this.http.post(Environment.swaggerUrl + 'user', user, {  observe: 'response' })
-   
+    return this.http.post(Environment.swaggerUrl + 'user', user, { observe: 'response' })
   }
 
 
   logout() {
-    // localStorage.removeItem('x-auth-token');
+    localStorage.removeItem('token');
+    this.navHide$.next(false);
     this.router.navigate([`login`]);
+
   }
 
 }
