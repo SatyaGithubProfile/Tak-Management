@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +10,7 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import {  FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
+import { TokenAttachService } from './services/token-attach.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,12 @@ import { AuthService } from './services/auth.service';
   ],
   providers: [
     provideClientHydration(),
-    AuthService
+    AuthService,
+     {
+      provide:HTTP_INTERCEPTORS,
+      useClass:TokenAttachService,
+      multi:true
+     }
   ],
   bootstrap: [AppComponent]
 })
