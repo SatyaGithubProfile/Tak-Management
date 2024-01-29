@@ -15,18 +15,18 @@ router.post('/login', async (req, res) => {
     if (error) res.status(400).send(error.details[0].message);
 
     // check the user existed??
-    let user = await User.findOne({email:req.body.email});
-    if(!user) return res.status(400).send('Invalid Email or Password!');
+    let user = await User.findOne({ email: req.body.email });
+    if (!user) return res.status(400).send('Invalid Email or Password!');
 
     // check the password valid or not?
     const validPassword = await bcrypt.compare(req.body.password, user.password);
-    if(!validPassword) return res.status(400).send('Invalid Email or Password!')
+    if (!validPassword) return res.status(400).send('Invalid Email or Password!')
 
     //generate the token...
     const token = user.getAuthToken();
 
     //revert back the response
-    res.header('x-auth-token',token).send({code : 200 , data : lodash.pick(user, ['_id','name','email']), 'token' : token} )
+    res.header('x-auth-token', token).send({ code: 200, data: lodash.pick(user, ['_id', 'name', 'email']), 'token': token })
 
 
 })
@@ -55,8 +55,24 @@ router.post('/registration', async (req, res) => {
     const token = user.getAuthToken();
 
     await user.save();
-    res.header('x-auth-token',token).send({code : 200 , data : lodash.pick(user, ['_id','name','email', 'isAdmin']), 'token' : token} )
+    res.header('x-auth-token', token).send({ code: 200, data: lodash.pick(user, ['_id', 'name', 'email', 'isAdmin']), 'token': token })
 })
+
+// To get all the user list
+
+router.get('/', async (req, res) => {
+    let users = await User.find().sort('name');
+    res.status(200).send(lodash.map(users, (user) => lodash.pick(user, ['_id', 'name', 'email', 'isAdmin'])))
+});
+
+router.patch('/role-update', async (req, res) => {
+        let user = await User.findOneAndUpdate({_id : req.body.id }, { $set: { isAdmin:req.body.isAdmin }   }, { new: true });
+        if (!user) res.status(400).send('Not found!');
+        res.status(200).send(user);
+}
+
+)
+
 
 // To validate the login user feilds
 function validateUser(user) {

@@ -3,10 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { TasksComponent } from './tasks/tasks.component';
 import { AuthService } from './services/auth.service';
 import { LoginComponent } from './login/login.component';
+import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'task',  component: TasksComponent, canActivate:[AuthService] },
+  { path: 'users',  component: UsersComponent, canActivate:[AuthService] },
   { path: '**', redirectTo: 'login' }
 
 

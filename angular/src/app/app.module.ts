@@ -11,6 +11,7 @@ import {  FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
 import { TokenAttachService } from './services/token-attach.service';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TokenAttachService } from './services/token-attach.service';
     TasksComponent,
     TopNavComponent,
     SideNavComponent,
-    LoginComponent
+    LoginComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

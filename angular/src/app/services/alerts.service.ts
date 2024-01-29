@@ -18,4 +18,14 @@ export class AlertsService {
     });
   }
 
+
+  errorAlert(message:string) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: message,
+    });
+  }
+
+
 }

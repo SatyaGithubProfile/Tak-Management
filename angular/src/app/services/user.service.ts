@@ -5,9 +5,9 @@ import { Environment } from '../environment';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-interface ApiResponse{
-  code : number,
-  token : string
+interface ApiResponse {
+  code: number,
+  token: string
 }
 
 @Injectable({
@@ -18,12 +18,22 @@ export class UserService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  login(user: User) : Observable<ApiResponse> {
+  login(user: User): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(Environment.swaggerUrl + 'user/login', user);
   }
 
-  signUp(user:Registration) : Observable<ApiResponse>  {
+  signUp(user: Registration): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(Environment.swaggerUrl + 'user/registration', user);
+  }
+
+  getUsers() {
+    return this.http.get<Registration[]>(Environment.swaggerUrl + 'user');
+  }
+
+  updateRole(id: string, isAdmin: boolean) {
+
+    return this.http.patch(Environment.swaggerUrl + 'user/role-update', { 'id':id, isAdmin });
+
   }
 
 
