@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class SideNavComponent {
 
+  constructor(private userServ:UserService) {}
+
+
+  logout() {
+    this.userServ.logout()
+  }
 }

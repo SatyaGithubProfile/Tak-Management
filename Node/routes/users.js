@@ -26,9 +26,7 @@ router.post('/', async (req, res) => {
     const token = user.getAuthToken();
 
     //revert back the response
-    res.header('x-auth-token',token).send(lodash.pick(user, ['_id','name','email']))
-
-
+    res.header('x-auth-token',token).send({code : 200 , data : lodash.pick(user, ['_id','name','email']), 'token' : token} )
 })
 
 
@@ -55,7 +53,8 @@ router.post('/', async (req, res) => {
     const token = user.getAuthToken();
 
     await user.save();
-    res.header('x-auth-token', token).send(lodash.pick(user, ['_id', 'name', 'email', 'isAdmin']));
+    res.header('x-auth-token',token).send({code : 200 , data : lodash.pick(user, ['_id','name','email', 'isAdmin']), 'token' : token} )
+
 })
 
 // To validate the login user feilds
