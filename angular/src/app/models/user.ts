@@ -4,6 +4,7 @@ export class Registration {
     name: string;
     email: string;
     password: string;
+    isAdmin:boolean = false;
 
     constructor(name: string = '', email: string, password: string) {
         this.name = name;

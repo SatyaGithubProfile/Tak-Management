@@ -8,7 +8,7 @@ const Joi = require('joi')
 
 // login the users
 
-router.post('/', async (req, res) => {
+router.post('/login', async (req, res) => {
 
     // check the fields are valid?
     const { error } = validateUser(req.body);
@@ -27,12 +27,14 @@ router.post('/', async (req, res) => {
 
     //revert back the response
     res.header('x-auth-token',token).send({code : 200 , data : lodash.pick(user, ['_id','name','email']), 'token' : token} )
+
+
 })
 
 
 
 // register the users
-router.post('/', async (req, res) => {
+router.post('/registration', async (req, res) => {
 
     // To check the user fields are valid with requirement
     const { error } = validate(req.body);
@@ -54,7 +56,6 @@ router.post('/', async (req, res) => {
 
     await user.save();
     res.header('x-auth-token',token).send({code : 200 , data : lodash.pick(user, ['_id','name','email', 'isAdmin']), 'token' : token} )
-
 })
 
 // To validate the login user feilds

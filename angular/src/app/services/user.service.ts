@@ -3,7 +3,12 @@ import { Registration, User } from '../models/user';
 import { HttpClient } from '@angular/common/http';
 import { Environment } from '../environment';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+interface ApiResponse{
+  code : number,
+  token : string
+}
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +18,12 @@ export class UserService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  login(user: User) {
-    return this.http.post(Environment.swaggerUrl + 'user', user, { observe: 'response' })
+  login(user: User) : Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(Environment.swaggerUrl + 'user/login', user);
+  }
+
+  signUp(user:Registration) : Observable<ApiResponse>  {
+    return this.http.post<ApiResponse>(Environment.swaggerUrl + 'user/registration', user);
   }
 
 
@@ -22,7 +31,6 @@ export class UserService {
     localStorage.removeItem('token');
     this.navHide$.next(false);
     this.router.navigate([`login`]);
-
   }
 
 }

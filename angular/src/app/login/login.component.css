@@ -47,6 +47,12 @@ input{
 	outline: none;
 	border-radius: 5px;
 }
+.errorMsg {
+	justify-content: center;
+	display: flex;
+	margin: -24px auto;
+	padding: 5px;
+}
 button{
 	width: 60%;
 	height: 40px;

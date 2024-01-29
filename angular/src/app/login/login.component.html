@@ -3,12 +3,33 @@
 		<input type="checkbox" id="chk" aria-hidden="true">
 
 		<div class="signup">
-			<form #regForm="ngForm">
+			<form #regForm="ngForm" (submit)="onSignUp()">
 				<label for="chk" aria-hidden="true">Sign up</label>
-				<input type="text" name="name" [(ngModel)]="registerDetails.name" placeholder="User name" required >
-				<input type="email" name="email" [(ngModel)]="registerDetails.email" placeholder="Email" required>
-				<input type="password" name="pswd" [(ngModel)]="registerDetails.password" placeholder="Password" required>
-				<button>Sign up</button>
+				<input type="text" name="name" [(ngModel)]="registerDetails.name" placeholder="User name"
+					#name="ngModel" minlength="4" required>
+				<div class="errorMsg" *ngIf="regForm.touched">
+					<span class="errorMsg" *ngIf="name.errors?.['required']" class="text-danger">Name field is
+						required...</span>
+					<span *ngIf="name.errors?.['minlength']" class="text-danger"> Min Length would be 5chars... </span>
+				</div>
+
+				<input type="email" name="email" [(ngModel)]="registerDetails.email" placeholder="Email"
+					#email="ngModel" required>
+				<div class="errorMsg" *ngIf="regForm.touched">
+					<span class="errorMsg" *ngIf="email.errors?.['required']" class="text-danger">email field is
+						required...</span>
+				</div>
+
+				<input type="password" name="pswd" [(ngModel)]="registerDetails.password" placeholder="Password"
+					required #pswd="ngModel">
+				<div class="errorMsg" *ngIf="regForm.touched">
+					<span class="errorMsg" *ngIf="pswd.errors?.['required']" class="text-danger">Password field is
+						required...</span>
+				</div>
+				<div class="errorMsg" *ngIf="errorMessage">
+					<span *ngIf="errorMessage" class="text-danger"> {{errorMessage}}</span>
+				</div>
+				<button type="submit">Sign up</button>
 			</form>
 		</div>
 
