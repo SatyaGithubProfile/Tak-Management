@@ -1,17 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Task } from '../models/tasks';
+import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Task, TaskInterface } from '../models/tasks';
+import { Environment } from '../environment';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksService {
-  swaggerURL: string = 'http://localhost:3003/'
+  swaggerURL: string = Environment.swaggerUrl;
 
   constructor(private http: HttpClient) { }
   
-  getTasks() {
-    return this.http.get<Task[]>(this.swaggerURL + 'tasks');
+  getTasks(limit:number, page:number) {
+    return this.http.get<TaskInterface>(this.swaggerURL + 'tasks?limit='+limit +'&page='+page);
   }
 
   postTask(task: Task) {

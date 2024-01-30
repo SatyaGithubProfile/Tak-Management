@@ -1,4 +1,8 @@
 
+export interface UserInterface {
+    data:Registration[];
+    count : number
+}
 
 export class Registration {
     _id !:string;

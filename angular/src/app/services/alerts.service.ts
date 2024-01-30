@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Injectable({
@@ -6,6 +7,9 @@ import Swal from 'sweetalert2';
 })
 export class AlertsService {
 
+  pageChange$ = new BehaviorSubject<number>(1);  // To get the page number 
+  limitChange$ = new BehaviorSubject<number>(5);  // limit per page 
+  @Output() totalRecordsShare = new EventEmitter<{totalRecords:number, limit:number}>();
   constructor() { }
 
   successAlert() {

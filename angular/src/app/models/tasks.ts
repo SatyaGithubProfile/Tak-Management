@@ -1,3 +1,10 @@
+
+export interface TaskInterface {
+    data:Task[];
+    count : number
+}
+
+
 export class Task {
     _id!:string;
     name: string;

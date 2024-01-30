@@ -7,8 +7,14 @@ const auth = require('../middleware/auth');
 
 
 router.get('/',  async (req, res) => {
-  const tasks = await Task.find().sort('name')
-  res.send(tasks);
+  const tasks = await Task.find().skip(req.query.page).limit(req.query.limit).sort('name');
+  const count = await Task.countDocuments();
+
+  const response = {
+    data: tasks,
+    count: count, // Total count of items
+  };
+  res.status(200).json(response)
 })
 
 // Create Tasks

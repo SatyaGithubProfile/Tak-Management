@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { TaskInterface } from './../models/tasks';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Task } from '../models/tasks';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
 import Swal from 'sweetalert2';
 import { TasksService } from '../services/tasks.service';
+import { skip } from 'rxjs';
 
 @Component({
   selector: 'app-tasks',
@@ -14,15 +16,28 @@ export class TasksComponent implements OnInit {
   [x: string]: any;
   display = "none";
   tasks: Task[] = [];
-  editEnable : boolean = false;
+  editEnable: boolean = false;
   index: number = 0;
-  errorMessage:string='';  // to store the server side error
+  errorMessage: string = '';  // to store the server side error
 
-  constructor(private taskServ: TasksService, private formBuilder: FormBuilder, 
-              private alerServ:AlertsService) { }
+  limit: number = 5;
+  page: number = 1;
+  totalRecords: number = 0;
+
+  constructor(private taskServ: TasksService, private formBuilder: FormBuilder,
+    private alerServ: AlertsService) { }
 
   ngOnInit(): void {
-    this.getTasks()
+    this.getTasks();
+    this.alerServ.limitChange$.pipe(skip(1)).subscribe((inputLimit: number) => {
+      this.limit = inputLimit;
+      this.getTasks();
+    });
+
+    this.alerServ.pageChange$.pipe(skip(1)).subscribe((inputPageNumber: number) => {
+      this.page = inputPageNumber;
+      this.getTasks();
+    })
   }
 
   taskForm = this.formBuilder.group({
@@ -31,18 +46,20 @@ export class TasksComponent implements OnInit {
   });
 
   getTasks() {
-    this.taskServ.getTasks().subscribe((res) => {
-      this.tasks = res;
+    const skip = this.page === 1 ? 0 : ((this.page - 1) * this.limit);
+    this.taskServ.getTasks(this.limit, skip).subscribe((res: TaskInterface) => {
+      this.tasks = res.data;
+      this.totalRecords = res.count;
+      this.alerServ.totalRecordsShare.emit({ totalRecords: this.totalRecords, limit: this.limit });
     },
       (err) => {
         this.errorMessage = err.error
       }
     );
-
   }
 
   saveTask() {
-    if(this.editEnable) return this.onEdit();
+    if (this.editEnable) return this.onEdit();
     const holdTask = new Task(this.taskForm.value.name || '', this.taskForm.value.comment || '')
     this.taskServ.postTask(holdTask).subscribe((result) => {
       this.tasks.push(result);
@@ -52,13 +69,13 @@ export class TasksComponent implements OnInit {
       (err) => this.errorMessage = err.error);
   }
 
-// to fill the detail on pop-up open
-  editOpen(index : number){
+  // to fill the detail on pop-up open
+  editOpen(index: number) {
     this.editEnable = true;
     this.index = index;
     this.taskForm.patchValue({
-      name : this.tasks[index].name,
-      comment : this.tasks[index].comment,
+      name: this.tasks[index].name,
+      comment: this.tasks[index].comment,
     });
   }
 
@@ -88,14 +105,14 @@ export class TasksComponent implements OnInit {
         console.log(error.error)
       }
     )
-    
+
   }
 
 
 
   openModal() {
     this.display = "block";
-    if(!this.editEnable) this.taskForm.reset()
+    if (!this.editEnable) this.taskForm.reset()
   }
   onCloseHandled() {
     this.display = "none";
@@ -104,7 +121,7 @@ export class TasksComponent implements OnInit {
   }
 
 
-  
+
 
   deleteAlert() {
     Swal.fire({

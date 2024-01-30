@@ -12,7 +12,6 @@ function auth(req, res, next) {
 
     try {
         const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
-        console.log('decoded--->', decoded, req.user)
         req.user = decoded;
         next();
     }

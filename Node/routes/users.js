@@ -61,8 +61,14 @@ router.post('/registration', async (req, res) => {
 // To get all the user list
 
 router.get('/', async (req, res) => {
-    let users = await User.find().sort('name');
-    res.status(200).send(lodash.map(users, (user) => lodash.pick(user, ['_id', 'name', 'email', 'isAdmin'])))
+    const users = await User.find().skip(req.query.page).limit(req.query.limit).sort('name');
+    const count = await User.countDocuments();
+  
+    const response = {
+      data: lodash.map(users, (user) => lodash.pick(user, ['_id', 'name', 'email', 'isAdmin'])),
+      count: count, // Total count of items
+    };
+    res.status(200).send(response)
 });
 
 router.patch('/role-update', async (req, res) => {

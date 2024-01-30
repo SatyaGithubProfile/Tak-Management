@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Registration, User } from '../models/user';
+import { Registration, User, UserInterface } from '../models/user';
 import { HttpClient } from '@angular/common/http';
 import { Environment } from '../environment';
 import { Router } from '@angular/router';
@@ -26,8 +26,8 @@ export class UserService {
     return this.http.post<ApiResponse>(Environment.swaggerUrl + 'user/registration', user);
   }
 
-  getUsers() {
-    return this.http.get<Registration[]>(Environment.swaggerUrl + 'user');
+  getUsers(limit:number, page:number) {
+    return this.http.get<UserInterface>(Environment.swaggerUrl + 'user?limit=' + limit + '&page=' + page);
   }
 
   updateRole(id: string, isAdmin: boolean) {
