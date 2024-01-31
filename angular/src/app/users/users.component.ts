@@ -27,8 +27,8 @@ export class UsersComponent implements OnInit, OnDestroy {
      }
 
   ngOnInit(): void {
-
-    this.limit$ = this.AlerServ.limitChange$.subscribe((inputLimit: number) => {
+    this.getAllUsers();
+    this.limit$ = this.AlerServ.limitChange$.pipe(skip(1)).subscribe((inputLimit: number) => {
       this.limit = inputLimit;
       this.getAllUsers();
     });

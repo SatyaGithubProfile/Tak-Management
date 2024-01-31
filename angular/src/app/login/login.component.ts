@@ -2,8 +2,6 @@ import { Component, OnDestroy } from '@angular/core';
 import { Registration, User } from '../models/user';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
-import { HttpResponse } from '@angular/common/http';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',

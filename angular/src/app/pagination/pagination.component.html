@@ -1,5 +1,5 @@
 
-<div class="col-md-1">
+<div class="col-md-1"  *ngIf="hideFeature">
   <select class="form-select" (change)="changeLimit($event) ">
     <option [value]="value" [selected]="value == limit"  *ngFor="let value of limitValue" >{{value}} </option>
   </select>

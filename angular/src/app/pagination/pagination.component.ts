@@ -13,7 +13,7 @@ export class PaginationComponent implements OnInit {
   totalRecords: number = 0;
   pageCount: number[] = [];
   currentPage: number = 1;
-  @Input() limit: number = 5;
+  limit: number = 5;
   limitValue = [5,10,20]
 
   constructor(private alertServ: AlertsService) {
