@@ -51,7 +51,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.totalRecords = resp.count;
         this.AlerServ.totalRecordsShare.emit({ totalRecords: this.totalRecords, limit: this.limit });
       },
-      (err) => console.log(err.error)
+      (err) => this.AlerServ.errorAlert(err.error)
     )
   }
 
@@ -65,7 +65,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
     this.userServ.updateRole(this.users[index]._id, change).subscribe(
       (resp) => {
-        console.log(resp);
         this.users[index].isAdmin = false;
       },
       (err) => {

@@ -29,14 +29,12 @@ export class LoginComponent implements OnDestroy {
     this.userServ.login(this.userDetails).
     subscribe(
       (resp) => {
-        console.log('resp--->', resp)
         localStorage.removeItem('token');
        localStorage.setItem('token',  resp.token);
        this.userServ.navHide$.next(true);
         this.router.navigate(['task']);
       },
       (err) => {
-        console.log('error-->', err)
         this.errorMessage = err.error;
       }
     )

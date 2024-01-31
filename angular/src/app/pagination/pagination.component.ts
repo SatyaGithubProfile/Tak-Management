@@ -34,7 +34,6 @@ export class PaginationComponent implements OnInit {
 
 
   pageChanged(page: number, move: string) {
-    console.log('page--->', page)
     if (move === 'N' && this.currentPage == this.pageCount[0]) return;
     if (move === 'P' && this.currentPage == 1) return;
     this.currentPage = page;

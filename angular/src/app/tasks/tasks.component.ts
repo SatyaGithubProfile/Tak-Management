@@ -101,12 +101,9 @@ export class TasksComponent implements OnInit, OnDestroy {
     this.taskServ.deleteTask(this.tasks[this.index]._id).subscribe(
       (res) => {
         this.alertServ.errorAlert('Deleted successfully!');
-        this.tasks.splice(this.index, 1)
+        this.tasks.splice(this.index, 1);
       },
-
-      (error) => {
-        console.log(error.error)
-      }
+      (error) =>this.alertServ.errorAlert(error.error)
     )
 
   }
