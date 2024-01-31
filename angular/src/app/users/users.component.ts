@@ -28,12 +28,12 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.AlerServ.limitChange$.subscribe((inputLimit: number) => {
+    this.limit$ = this.AlerServ.limitChange$.subscribe((inputLimit: number) => {
       this.limit = inputLimit;
       this.getAllUsers();
     });
 
-    this.AlerServ.pageChange$.pipe(skip(1)).subscribe((inputPageNumber: number) => {
+    this.page$ =this.AlerServ.pageChange$.pipe(skip(1)).subscribe((inputPageNumber: number) => {
       this.page = inputPageNumber;
       this.getAllUsers();
     })
@@ -78,6 +78,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.AlerServ.resetPagination$.next(true);
     this.limit$.unsubscribe();
     this.page$.unsubscribe();
   }

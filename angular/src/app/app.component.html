@@ -9,21 +9,7 @@
 
     <div class="col">
       <router-outlet></router-outlet>
-      <nav aria-label="Page navigation example" *ngIf="navHide" >
-        <span>Showing {{currentPage * limit <= totalRecords ? currentPage * limit : totalRecords }} out of
-            {{totalRecords }} </span>
-            <ul class="pagination justify-content-end">
-              <li (click)="pageChanged(currentPage-1, 'P')" class="page-item" [ngClass]="currentPage == 1 ? 'disabled' : ''">
-                <a class="page-link"tabindex="-1">Previous</a>
-              </li>
-              <li *ngFor="let number of pageCount; index as i" class="page-item"><a class="page-link"
-                  [ngClass]="{'active': currentPage === i+1}" (click)="pageChanged(i+1, 'NA')"> {{i+1}} </a></li>
-              <li class="page-item" (click)="pageChanged(currentPage+1, 'N')"
-                [ngClass]="currentPage == pageCount[0] ? 'disabled' : ''">
-                <a class="page-link">Next</a>
-              </li>
-            </ul>
-      </nav>
+      <app-pagination [hideFeature]="navHide" ></app-pagination>
     </div>
   </div>
 </div>

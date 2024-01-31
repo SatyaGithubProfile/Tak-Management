@@ -26,18 +26,18 @@ export class TasksComponent implements OnInit, OnDestroy {
   page$:Subscription;
 
   constructor(private taskServ: TasksService, private formBuilder: FormBuilder,
-    private alerServ: AlertsService) {
+    private alertServ: AlertsService) {
       this.limit$ = this.page$ = Subscription.EMPTY;
      }
 
   ngOnInit(): void {
     this.getTasks();
-    this.limit$ =this.alerServ.limitChange$.pipe(skip(1)).subscribe((inputLimit: number) => {
+    this.limit$ =this.alertServ.limitChange$.pipe(skip(1)).subscribe((inputLimit: number) => {
       this.limit = inputLimit;
       this.getTasks();
     });
 
-    this.page$ = this.alerServ.pageChange$.pipe(skip(1)).subscribe((inputPageNumber: number) => {
+    this.page$ = this.alertServ.pageChange$.pipe(skip(1)).subscribe((inputPageNumber: number) => {
       this.page = inputPageNumber;
       this.getTasks();
     })
@@ -53,7 +53,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     this.taskServ.getTasks(this.limit, skip).subscribe((res: TaskInterface) => {
       this.tasks = res.data;
       this.totalRecords = res.count;
-      this.alerServ.totalRecordsShare.emit({ totalRecords: this.totalRecords, limit: this.limit });
+      this.alertServ.totalRecordsShare.emit({ totalRecords: this.totalRecords, limit: this.limit });
     },
       (err) => {
         this.errorMessage = err.error
@@ -67,7 +67,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     this.taskServ.postTask(holdTask).subscribe((result) => {
       this.tasks.push(result);
       this.onCloseHandled();
-      this.alerServ.successAlert();
+      this.alertServ.successAlert();
     },
       (err) => this.errorMessage = err.error);
   }
@@ -89,7 +89,7 @@ export class TasksComponent implements OnInit, OnDestroy {
         this.tasks[this.index].name = res.name;
         this.tasks[this.index].comment = res.comment;
         this.onCloseHandled();
-        this.alerServ.successAlert();
+        this.alertServ.successAlert();
       },
       (err) => this.errorMessage = err.error
     )
@@ -100,7 +100,7 @@ export class TasksComponent implements OnInit, OnDestroy {
 
     this.taskServ.deleteTask(this.tasks[this.index]._id).subscribe(
       (res) => {
-        this.deletedSuccess();
+        this.alertServ.errorAlert('Deleted successfully!');
         this.tasks.splice(this.index, 1)
       },
 
@@ -152,6 +152,7 @@ export class TasksComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
+    this.alertServ.resetPagination$.next(true);
     this.limit$.unsubscribe();
     this.page$.unsubscribe();
   }
