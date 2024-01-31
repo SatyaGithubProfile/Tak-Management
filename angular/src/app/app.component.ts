@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     if (localStorage.getItem('token') && localStorage.getItem('token') !== null) this.navHide = true;
+    this.clearStorage();
     this.alertServ.totalRecordsShare.subscribe((res) => {
       this.pageCount = [];
       this.totalRecords = 0;
@@ -34,8 +35,15 @@ export class AppComponent implements OnInit {
       this.limit = res.limit;
       Array(count).fill(count).map((x) => this.pageCount.push(x));
     });
-    this.alertServ.limitChange$.pipe(skip(1)).subscribe((res) => this.limit = res)
+    this.alertServ.limitChange$.pipe(skip(1)).subscribe((res) => this.limit = res);
+  }
 
+  
+  clearStorage() {
+    window.onbeforeunload = function() {
+      localStorage.clear();
+      return '';
+    };
   }
 
   pageChanged(page: number) {

@@ -9,7 +9,7 @@
 
     <div class="col">
       <router-outlet></router-outlet>
-      <nav aria-label="Page navigation example">
+      <nav aria-label="Page navigation example" *ngIf="navHide" >
         <span>Showing {{currentPage * limit <= totalRecords ? currentPage * limit : totalRecords }} out of
             {{totalRecords }} </span>
             <ul class="pagination justify-content-end">
