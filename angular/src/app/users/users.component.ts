@@ -1,9 +1,9 @@
 import { AlertsService } from './../services/alerts.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Registration, UserInterface } from '../models/user';
 import { UserService } from '../services/user.service';
 import { TokenAttachService } from '../services/token-attach.service';
-import { skip } from 'rxjs';
+import { Subscription, skip } from 'rxjs';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
@@ -11,16 +11,20 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
   users: Registration[] = [];
   userForm: FormGroup =   this.formBuilder.group({});;
 
   limit: number = 5;
   page: number = 1;
   totalRecords: number = 0;
+  limit$:Subscription;
+  page$:Subscription;
 
   constructor(private userServ: UserService, private tokeServ: TokenAttachService, 
-    private formBuilder: FormBuilder,private AlerServ: AlertsService) { }
+    private formBuilder: FormBuilder,private AlerServ: AlertsService) {
+      this.limit$ = this.page$ = Subscription.EMPTY;
+     }
 
   ngOnInit(): void {
 
@@ -73,6 +77,9 @@ export class UsersComponent implements OnInit {
 
   }
 
-
+  ngOnDestroy(): void {
+    this.limit$.unsubscribe();
+    this.page$.unsubscribe();
+  }
 
 }

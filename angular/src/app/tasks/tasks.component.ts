@@ -1,18 +1,18 @@
 import { TaskInterface } from './../models/tasks';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Task } from '../models/tasks';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
 import Swal from 'sweetalert2';
 import { TasksService } from '../services/tasks.service';
-import { skip } from 'rxjs';
+import { Subscription, skip } from 'rxjs';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css'
 })
-export class TasksComponent implements OnInit {
+export class TasksComponent implements OnInit, OnDestroy {
   display = "none";
   tasks: Task[] = [];
   editEnable: boolean = false;
@@ -22,18 +22,22 @@ export class TasksComponent implements OnInit {
   limit: number = 5;
   page: number = 1;
   totalRecords: number = 0;
+  limit$:Subscription;
+  page$:Subscription;
 
   constructor(private taskServ: TasksService, private formBuilder: FormBuilder,
-    private alerServ: AlertsService) { }
+    private alerServ: AlertsService) {
+      this.limit$ = this.page$ = Subscription.EMPTY;
+     }
 
   ngOnInit(): void {
     this.getTasks();
-    this.alerServ.limitChange$.pipe(skip(1)).subscribe((inputLimit: number) => {
+    this.limit$ =this.alerServ.limitChange$.pipe(skip(1)).subscribe((inputLimit: number) => {
       this.limit = inputLimit;
       this.getTasks();
     });
 
-    this.alerServ.pageChange$.pipe(skip(1)).subscribe((inputPageNumber: number) => {
+    this.page$ = this.alerServ.pageChange$.pipe(skip(1)).subscribe((inputPageNumber: number) => {
       this.page = inputPageNumber;
       this.getTasks();
     })
@@ -144,5 +148,11 @@ export class TasksComponent implements OnInit {
       text: "Your file has been deleted.",
       icon: "success"
     });
+  }
+
+
+  ngOnDestroy(): void {
+    this.limit$.unsubscribe();
+    this.page$.unsubscribe();
   }
 }

@@ -36,7 +36,9 @@ export class AppComponent implements OnInit {
     this.alertServ.limitChange$.pipe(skip(1)).subscribe((res) => this.limit = res);
   }
 
-  pageChanged(page: number) {
+  pageChanged(page: number, move:string) {
+    if(move === 'N' && this.currentPage == this.pageCount[0])  return;
+    if(move === 'P' && this.currentPage == 1)  return;
     this.currentPage = page;
     this.alertServ.pageChange$.next(page);
   }

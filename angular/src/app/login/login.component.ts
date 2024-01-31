@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Registration, User } from '../models/user';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { NgForm } from '@angular/forms';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
 
   registerDetails: Registration = new Registration('New User', 'newuser@gmail.com', '12345');
   userDetails: User = new User('first@gmail.com', '12345');
@@ -23,7 +23,6 @@ export class LoginComponent {
       this.userServ.navHide$.next(false);
     }
   }
-
 
   login() {
     this.errorMessage = '';
@@ -53,6 +52,10 @@ export class LoginComponent {
          this.router.navigate(['task']);
       },
       (err) => this.errorMessage = err.error);
+  }
+
+  ngOnDestroy(): void {
+   this.errorMessage = '';
   }
 
 }
