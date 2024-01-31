@@ -13,7 +13,6 @@ import { skip } from 'rxjs';
   styleUrl: './tasks.component.css'
 })
 export class TasksComponent implements OnInit {
-  [x: string]: any;
   display = "none";
   tasks: Task[] = [];
   editEnable: boolean = false;
