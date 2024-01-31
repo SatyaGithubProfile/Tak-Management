@@ -50,7 +50,7 @@ input{
 .errorMsg {
 	justify-content: center;
 	display: flex;
-	margin: -24px auto;
+	margin: -13px auto;
 	padding: 5px;
 }
 button{

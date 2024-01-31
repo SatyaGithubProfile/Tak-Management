@@ -1,8 +1,7 @@
 import { AlertsService } from './services/alerts.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
-import { TasksComponent } from './tasks/tasks.component';
 import { TasksService } from './services/tasks.service';
 import { skip } from 'rxjs';
 
@@ -26,7 +25,6 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     if (localStorage.getItem('token') && localStorage.getItem('token') !== null) this.navHide = true;
-    this.clearStorage();
     this.alertServ.totalRecordsShare.subscribe((res) => {
       this.pageCount = [];
       this.totalRecords = 0;
@@ -36,14 +34,6 @@ export class AppComponent implements OnInit {
       Array(count).fill(count).map((x) => this.pageCount.push(x));
     });
     this.alertServ.limitChange$.pipe(skip(1)).subscribe((res) => this.limit = res);
-  }
-
-  
-  clearStorage() {
-    window.onbeforeunload = function() {
-      localStorage.clear();
-      return '';
-    };
   }
 
   pageChanged(page: number) {
