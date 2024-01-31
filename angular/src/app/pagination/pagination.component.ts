@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, input } from '@angular/core';
 import { AlertsService } from '../services/alerts.service';
 import { skip } from 'rxjs';
 
@@ -13,7 +13,8 @@ export class PaginationComponent implements OnInit {
   totalRecords: number = 0;
   pageCount: number[] = [];
   currentPage: number = 1;
-  limit: number = 5;
+  @Input() limit: number = 5;
+  limitValue = [5,10,20]
 
   constructor(private alertServ: AlertsService) {
   }
@@ -24,7 +25,7 @@ export class PaginationComponent implements OnInit {
       this.pageCount = [];
       this.totalRecords = 0;
       this.totalRecords = res.totalRecords;
-      const count = Math.round(res.totalRecords / this.limit);
+      const count = Math.round(res.totalRecords / this.limit) || 1;
       this.limit = res.limit;
       Array(count).fill(count).map((x) => this.pageCount.push(x));
     });
@@ -39,6 +40,12 @@ export class PaginationComponent implements OnInit {
     this.currentPage = page;
     this.alertServ.pageChange$.next(page);
   }
+
+  changeLimit(event:Event) {
+    this.resetPagination();
+    this.limit = +(event.target as HTMLInputElement).value;
+    this.alertServ.limitChange$.next(this.limit);
+   }
 
   resetPagination() {
     this.totalRecords = 0;

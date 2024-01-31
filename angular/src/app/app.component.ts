@@ -13,20 +13,12 @@ import { skip } from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'angular';
   navHide: boolean = false;
-  // totalRecords: number = 0;
-  // pageCount: number[] = [];
-  // currentPage: number = 1;
-  // limit: number = 5;
 
-
-
-  constructor( private userServ: UserService) {
+  constructor( private userServ: UserService, private alertServ:AlertsService) {
     this.userServ.navHide$.subscribe((result) => this.navHide = result);
   }
   ngOnInit(): void {
     if (localStorage.getItem('token') && localStorage.getItem('token') !== null) this.navHide = true;
   }
-
-
 
 }

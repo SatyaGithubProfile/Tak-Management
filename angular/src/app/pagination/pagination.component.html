@@ -1,3 +1,10 @@
+
+<div class="col-md-1">
+  <select class="form-select" (change)="changeLimit($event) ">
+    <option [value]="value" [selected]="value == limit"  *ngFor="let value of limitValue" >{{value}} </option>
+  </select>
+</div>
+<router-outlet></router-outlet>
 <nav aria-label="Page navigation example" *ngIf="hideFeature" >
     <span>Showing {{currentPage * limit <= totalRecords ? currentPage * limit : totalRecords }} out of
         {{totalRecords }} </span>

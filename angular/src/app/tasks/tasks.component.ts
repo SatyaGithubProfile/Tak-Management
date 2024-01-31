@@ -31,8 +31,8 @@ export class TasksComponent implements OnInit, OnDestroy {
      }
 
   ngOnInit(): void {
-    this.getTasks();
-    this.limit$ =this.alertServ.limitChange$.pipe(skip(1)).subscribe((inputLimit: number) => {
+    this.limit$ =this.alertServ.limitChange$.subscribe((inputLimit: number) => {
+      this.page = 1;
       this.limit = inputLimit;
       this.getTasks();
     });
