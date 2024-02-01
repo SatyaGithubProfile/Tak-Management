@@ -22,7 +22,7 @@ const taskModel = mongoose.model('Task', new mongoose.Schema({
 function validateTask(customer) {
     const schema = Joi.object({
     name: Joi.string().min(3).max(50).required(),
-    comment: Joi.string().min(5).max(50).required()
+    comment: Joi.string().min(5).max(250).required()
   });
 
 //   return schema.validate(customer, schema);

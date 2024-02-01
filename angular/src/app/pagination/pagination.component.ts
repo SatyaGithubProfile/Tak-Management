@@ -16,8 +16,7 @@ export class PaginationComponent implements OnInit {
   limit: number = 5;
   limitValue = [5,10,20]
 
-  constructor(private alertServ: AlertsService) {
-  }
+  constructor(private alertServ: AlertsService) { }
 
   ngOnInit(): void {
     this.alertServ.resetPagination$.subscribe(() => this.resetPagination());
