@@ -7,3 +7,8 @@
 .row {
   margin : 0;
 }
+
+.boarder-sucessCss {
+  border: 1px solid ;
+  margin: 10px !important;
+}

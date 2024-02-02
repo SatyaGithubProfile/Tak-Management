@@ -3,19 +3,61 @@
 </div>
 <div class="row">
 
-  <div class="col-sm-3 mt-4" *ngFor="let task of tasks; index as i ">
-    <div class="card border-success mb-3" style="max-width: 18rem;">
-      <div class="card-header  text-bg-info  border-success">{{task.name}}</div>
-      <div class="card-body text-success">
-        <!-- <h5 class="card-title">{{task.name}} </h5> -->
-        <p class="card-text">{{task.comment}}</p>
-      </div>
-      <div class="card-footer bg-transparent border-success">
-        <span (click)="editOpen(i); openModal()"><i class="bi bi-pencil-square text-primary"></i></span> &nbsp;
-        <span (click)="index = i; deleteAlert()"><i class="bi bi-trash3-fill text-danger"></i></span>
+  <div class="col-3 boarder-sucessCss">
+    <h4 style="text-align: center;" class="text-danger" >Pending</h4>
+    <hr>
+    <div class="mt-4" *ngFor="let task of tasks; index as i ">
+      <div class="card border-danger mb-3" style="max-width: 18rem;">
+        <div class="card-header  text-bg-danger  border-danger">{{task.name}}</div>
+        <div class="card-body">
+          <!-- <h5 class="card-title">{{task.name}} </h5> -->
+          <p class="card-text">{{task.comment}}</p>
+        </div>
+        <div class="card-footer bg-transparent border-danger">
+          <span (click)="index = i; deleteAlert()" style="float: right;" class="px-2" ><i class="bi bi-trash3-fill text-danger"></i></span>
+          <span (click)="editOpen(i); openModal()" style="float: right;" class="px-2" ><i class="bi bi-pencil-square text-primary"></i></span> &nbsp;
+        </div>
       </div>
     </div>
   </div>
+
+  <div class="col-3 boarder-sucessCss">
+    <h4 style="text-align: center;" class="text-warning" >On-Going</h4>
+    <hr>
+    <div class="mt-4" *ngFor="let task of tasks; index as i ">
+      <div class="card border-warning mb-3" style="max-width: 18rem;">
+        <div class="card-header  text-bg-warning  border-warning">{{task.name}}</div>
+        <div class="card-body text">
+          <!-- <h5 class="card-title">{{task.name}} </h5> -->
+          <p class="card-text">{{task.comment}}</p>
+        </div>
+        <div class="card-footer bg-transparent border-warning">
+          <span (click)="index = i; deleteAlert()"  style="float: right;" class="px-2"><i class="bi bi-trash3-fill text-danger"></i></span>
+          <span (click)="editOpen(i); openModal()"  style="float: right;" class="px-2"><i class="bi bi-pencil-square text-primary"></i></span> &nbsp;
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-3 boarder-sucessCss">
+    <h4 style="text-align: center;" class="text-success" >Completed</h4>
+    <hr>
+    <div class="mt-4" *ngFor="let task of tasks; index as i ">
+      <div class="card border-success mb-3" style="max-width: 18rem;">
+        <div class="card-header  text-bg-success  border-success">{{task.name}}</div>
+        <div class="card-body text-success">
+          <!-- <h5 class="card-title">{{task.name}} </h5> -->
+          <p class="card-text">{{task.comment}}</p>
+        </div>
+        <div class="card-footer bg-transparent border-success">
+          <span (click)="index = i; deleteAlert()"  style="float: right;" class="px-2"><i class="bi bi-trash3-fill text-danger"></i></span>
+          <span (click)="editOpen(i); openModal()"  style="float: right;" class="px-2"><i class="bi bi-pencil-square text-primary"></i></span> &nbsp;
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
 
 </div>
 
@@ -24,7 +66,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">{{editEnable ? 'Add ' : 'Edit ' }} Task </h4>
+        <h4 class="modal-title">{{!editEnable ? 'Add ' : 'Edit ' }} Task </h4>
         <!-- <button type="button" class="btn-close" aria-label="Close"></button> -->
         <button type="button" class="btn-close" aria-label="Close" (click)="onCloseHandled()"></button>
       </div>
