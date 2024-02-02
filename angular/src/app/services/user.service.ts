@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Registration, User, UserInterface } from '../models/user';
+import { Registration, User, UserInterface, loginModel } from '../models/user';
 import { HttpClient } from '@angular/common/http';
 import { Environment } from '../environment';
 import { Router } from '@angular/router';
@@ -18,8 +18,8 @@ export class UserService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  login(user: User): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(Environment.swaggerUrl + 'user/login', user);
+  login(user: User): Observable<loginModel> {
+    return this.http.post<loginModel>(Environment.swaggerUrl + 'user/login', user);
   }
 
   signUp(user: Registration): Observable<ApiResponse> {

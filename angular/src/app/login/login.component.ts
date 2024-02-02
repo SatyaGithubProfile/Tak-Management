@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Registration, User } from '../models/user';
+import { Registration, User, loginModel } from '../models/user';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 
@@ -16,7 +16,7 @@ export class LoginComponent implements OnDestroy {
   errorMessage: string = ''
 
   constructor(private userServ: UserService, private router: Router) {
-    if(localStorage.getItem('token')) {
+    if (localStorage.getItem('token')) {
       localStorage.removeItem('token');
       this.userServ.navHide$.next(false);
     }
@@ -25,17 +25,18 @@ export class LoginComponent implements OnDestroy {
   login() {
     this.errorMessage = '';
     this.userServ.login(this.userDetails).
-    subscribe(
-      (resp) => {
-        localStorage.removeItem('token');
-       localStorage.setItem('token',  resp.token);
-       this.userServ.navHide$.next(true);
-        this.router.navigate(['task']);
-      },
-      (err) => {
-        this.errorMessage = err.error;
-      }
-    )
+      subscribe(
+        (resp: loginModel) => {
+          localStorage.removeItem('token');
+          localStorage.setItem('token', resp.token);
+          localStorage.setItem('data', JSON.stringify(resp.data));
+          this.userServ.navHide$.next(true);
+          this.router.navigate(['task']);
+        },
+        (err) => {
+          this.errorMessage = err.error;
+        }
+      )
 
   }
 
@@ -43,15 +44,15 @@ export class LoginComponent implements OnDestroy {
   onSignUp() {
     this.userServ.signUp(this.registerDetails).subscribe(
       (resp) => {
-        localStorage.setItem('token',  resp.token);
+        localStorage.setItem('token', resp.token);
         this.userServ.navHide$.next(true);
-         this.router.navigate(['task']);
+        this.router.navigate(['task']);
       },
       (err) => this.errorMessage = err.error);
   }
 
   ngOnDestroy(): void {
-   this.errorMessage = '';
+    this.errorMessage = '';
   }
 
 }

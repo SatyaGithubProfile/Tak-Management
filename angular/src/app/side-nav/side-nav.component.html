@@ -1,40 +1,63 @@
 
-<div class="d-flex flex-column flex-shrink-0 text-white bg-dark sidebar">
-    <a href="/" class="d-flex align-items-center mb-6 mb-md-0 me-md-auto text-white text-decoration-none">
-      <svg class="bi me-2" width="25" height="32"><use xlink:href="#bootstrap"></use></svg>
-      <span class="fs-4">Sidebar</span>
-    </a>
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-        <a routerLink="task" class="nav-link" aria-current="page"  routerLinkActive="active">
-          <svg class="bi me-2" width="16" height="16"></svg>
-          Home
-        </a>
-      </li>
-      <li>
-        <a class="nav-link"  routerLinkActive="active">
-          <svg class="bi me-2" width="16" height="16"></svg>
-          Dashboard
-        </a>
-      </li>
-      <li>
-        <a  routerLink="users"  class="nav-link"  routerLinkActive="active">
-          <svg class="bi me-2" width="16" height="16"></svg>
-          Users
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-          Products
-        </a>
-      </li>
-      <li (click)="logout()" >
-        <a class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-          logout
-        </a>
-      </li>
-    </ul>
-    <hr>
+    <div class="wrapper">
+      <!--Top menu -->
+      <div class="sidebar">
+        <div class="profile">
+          <img src="../../assets/image.png" alt="profile_picture">
+          <h3>{{name | titlecase }} </h3>
+          <p>{{admin | titlecase}} </p>
+
+          <ul class="mt-2" >
+            <li>
+                <a href="#" class="active">
+                    <span class="icon"><i class="fas fa-home"></i></span>
+                    <span class="item">Home</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="task">
+                    <span class="icon"><i class="bi bi-list-task"></i></span>
+                    <span class="item">Tasks</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="users">
+                    <span class="icon"><i class="bi bi-people-fill"></i></span>
+                    <span class="item">People</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
+                    <span class="item">Perfomance</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon"><i class="fas fa-database"></i></span>
+                    <span class="item">Development</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon"><i class="fas fa-chart-line"></i></span>
+                    <span class="item">Reports</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon"><i class="fas fa-user-shield"></i></span>
+                    <span class="item">Admin</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="icon"><i class="fas fa-cog"></i></span>
+                    <span class="item">Settings</span>
+                </a>
+            </li>
+        </ul>
+      </div>
+      </div>
+
+  </div>

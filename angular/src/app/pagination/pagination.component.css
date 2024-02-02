@@ -1,0 +1,22 @@
+
+.limiCss{
+    position: absolute;
+    padding-top: 64px;
+}
+
+.bodyCss {
+    padding-top: 96px;
+}
+
+.paginationSetup {
+    bottom: 30px;
+}
+
+.entriesMsg {
+    position: absolute;
+}
+
+.pagination {
+    position: absolute;
+    right:12px
+}

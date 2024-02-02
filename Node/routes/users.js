@@ -26,7 +26,7 @@ router.post('/login', async (req, res) => {
     const token = user.getAuthToken();
 
     //revert back the response
-    res.header('x-auth-token', token).send({ code: 200, data: lodash.pick(user, ['_id', 'name', 'email']), 'token': token })
+    res.header('x-auth-token', token).send({ code: 200, data: lodash.pick(user, ['_id', 'name', 'email','isAdmin']), 'token': token })
 
 
 })

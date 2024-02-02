@@ -27,3 +27,13 @@ export class User {
         this.password = password;
     }
 }
+
+export class loginModel {
+    code : string = '';
+    data!: {
+        _id: string;
+        name: string;
+        email: string;
+    };
+    token:string = '';
+}

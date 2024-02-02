@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
-import { UserService } from '../services/user.service';
+import { Component, OnInit } from '@angular/core';
+import { loginModel } from '../models/user';
 
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.css'
 })
-export class SideNavComponent {
-
-  constructor(private userServ:UserService) {}
-
-
-  logout() {
-    this.userServ.logout()
+export class SideNavComponent implements OnInit {
+   data:string = ''
+   name :string = '';
+   admin : string = '';
+  ngOnInit(): void {
+   this.data =localStorage.getItem('data') || '';
+   this.name = JSON.parse(this.data).name;
+   this.admin = JSON.parse(this.data).isAdmin ? 'Admin' : 'User';
   }
+
 }
