@@ -14,8 +14,8 @@
           <p class="card-text">{{task.comment}}</p>
         </div>
         <div class="card-footer bg-transparent border-danger">
-          <span (click)="index = i; deleteAlert()" style="float: right;" class="px-2" ><i class="bi bi-trash3-fill text-danger"></i></span>
-          <span (click)="editOpen(i); openModal()" style="float: right;" class="px-2" ><i class="bi bi-pencil-square text-primary"></i></span> &nbsp;
+          <span (click)="index = i; deleteAlert(1)" style="float: right;" class="px-2" ><i class="bi bi-trash3-fill text-danger"></i></span>
+          <span (click)="editOpen(i, 1); openModal()" style="float: right;" class="px-2" ><i class="bi bi-pencil-square text-primary"></i></span> &nbsp;
         </div>
       </div>
     </div>
@@ -32,8 +32,8 @@
           <p class="card-text">{{task.comment}}</p>
         </div>
         <div class="card-footer bg-transparent border-warning">
-          <span (click)="index = i; deleteAlert()"  style="float: right;" class="px-2"><i class="bi bi-trash3-fill text-danger"></i></span>
-          <span (click)="editOpen(i); openModal()"  style="float: right;" class="px-2"><i class="bi bi-pencil-square text-primary"></i></span> &nbsp;
+          <span (click)="index = i; deleteAlert(2)"  style="float: right;" class="px-2"><i class="bi bi-trash3-fill text-danger"></i></span>
+          <span (click)="editOpen(i, 2); openModal()"  style="float: right;" class="px-2"><i class="bi bi-pencil-square text-primary"></i></span> &nbsp;
         </div>
       </div>
     </div>
@@ -50,8 +50,8 @@
           <p class="card-text">{{task.comment}}</p>
         </div>
         <div class="card-footer bg-transparent border-success">
-          <span (click)="index = i; deleteAlert()"  style="float: right;" class="px-2"><i class="bi bi-trash3-fill text-danger"></i></span>
-          <span (click)="editOpen(i); openModal()"  style="float: right;" class="px-2"><i class="bi bi-pencil-square text-primary"></i></span> &nbsp;
+          <span (click)="index = i; deleteAlert(3)"  style="float: right;" class="px-2"><i class="bi bi-trash3-fill text-danger"></i></span>
+          <span (click)="editOpen(i, 3); openModal()"  style="float: right;" class="px-2"><i class="bi bi-pencil-square text-primary"></i></span> &nbsp;
         </div>
       </div>
     </div>
@@ -91,22 +91,47 @@
               <span *ngIf="taskForm.get('comment')?.errors?.['minlength']" class="text-danger">Must be more than 5
                 chars...</span>
             </div>
-
           </div>
+
+          <br>
+          <div class="row">
+            <div class="col-5">
+              <!-- multi-select-dropdown.component.html -->
+              <div class="dropdown"  formGroupName="assigndUsers">
+                <button class="btn btn-default border-success dropdown-toggle" type="button" id="dropdownMenuButton"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="toggleDropdown()">
+                  Assign Users
+                </button>
+                <div class="dropdown-menu" [ngClass]="{ 'show': isDropdownOpen }" aria-labelledby="dropdownMenuButton">
+                  <div *ngFor="let user of users">
+                    <label class="dropdown-item">
+                      <input type="checkbox" (change)="onCheckboxChange($event, user._id)" formControlName="{{user._id}}" checked>
+                      {{ user.name }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+          
+            </div>
+          
+            <div class="col-5" *ngIf="editEnable" >
+              <select class="form-select" aria-label="Default select example" formControlName="status">
+                <option value="1" class="text-danger">Pending</option>
+                <option value="2" class="text-warning">OnGoing</option>
+                <option value="3" class="text-success">Completed</option>
+              </select>
+            </div>
+          </div>
+         
         </div>
         <div class="modal-footer">
-          <div class="row">
             <div class="col-8">
-
               <span *ngIf="errorMessage !== ''" class="text-danger"> {{errorMessage}} </span>
             </div>
             <div class="col">
-              <button type="button" class="btn btn-default" (click)="onCloseHandled()">Close</button>
+              <button type="button" class="btn btn-default" (click)="onCloseHandled()">Close</button> &nbsp;
               <button type="submit" class="btn btn-primary"> Save</button>
             </div>
-
-          </div>
-
         </div>
       </form>
 

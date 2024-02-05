@@ -22,7 +22,7 @@ const taskModel = mongoose.model('Task', new mongoose.Schema({
     },
     Status: {
         type : Number,
-        required:true
+        required:true,
     },
     assignEmployee : {
         type : [mongoose.Schema.Types.ObjectId],

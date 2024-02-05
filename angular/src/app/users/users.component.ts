@@ -13,7 +13,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 })
 export class UsersComponent implements OnInit, OnDestroy {
   users: Registration[] = [];
-  userForm: FormGroup =   this.formBuilder.group({});;
+  userForm: FormGroup =   this.formBuilder.group({});
 
   limit: number = 5;
   page: number = 1;

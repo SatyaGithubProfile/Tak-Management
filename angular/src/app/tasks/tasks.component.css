@@ -12,3 +12,9 @@
   border: 1px solid ;
   margin: 10px !important;
 }
+
+
+.dropdown-menu {
+  max-height: 150px;
+  overflow-y: auto;
+}

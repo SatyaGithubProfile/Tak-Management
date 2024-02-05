@@ -18,8 +18,6 @@ router.get('/', async (req, res) => {
 
   const tasks = await Task.find().skip(req.query.page).limit(req.query.limit).sort('name');
 
-  console.log('tasks)=-->', tasks);
-
   tasks.forEach(
     (record) => {
       switch (record.Status) {
@@ -37,8 +35,6 @@ router.get('/', async (req, res) => {
       }
     })
 
-  // console.log('task data--->',taskData)
-
 
   const response = {
     data: taskData,
@@ -54,6 +50,7 @@ router.post('/', async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
   // let task = new Task({ name: req.body.name, comment: req.body.comment });
   let task = new Task(lodash.pick(req.body, ['name', 'comment', 'EOD', 'Status', 'assignEmployee']));
+  await task.save()
   res.send(task);
 });
 
@@ -61,10 +58,11 @@ router.post('/', async (req, res) => {
 router.put('/:id', [auth], async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
-
   let task = await Task.findByIdAndUpdate(req.params.id, {
     name: req.body.name,
-    comment: req.body.comment
+    comment: req.body.comment,
+    assignEmployee:req.body.assignEmployee,
+    Status : req.body.Status
   }, { new: true });
   if (!task) return res.status(404).send('The Task with the given ID was not found.');
   res.send(task);
