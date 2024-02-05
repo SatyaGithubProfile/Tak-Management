@@ -6,7 +6,7 @@
   <div class="col-3 boarder-sucessCss">
     <h4 style="text-align: center;" class="text-danger" >Pending</h4>
     <hr>
-    <div class="mt-4" *ngFor="let task of tasks; index as i ">
+    <div class="mt-4" *ngFor="let task of pendingTasks; index as i ">
       <div class="card border-danger mb-3" style="max-width: 18rem;">
         <div class="card-header  text-bg-danger  border-danger">{{task.name}}</div>
         <div class="card-body">
@@ -24,7 +24,7 @@
   <div class="col-3 boarder-sucessCss">
     <h4 style="text-align: center;" class="text-warning" >On-Going</h4>
     <hr>
-    <div class="mt-4" *ngFor="let task of tasks; index as i ">
+    <div class="mt-4" *ngFor="let task of onGoingTasks; index as i ">
       <div class="card border-warning mb-3" style="max-width: 18rem;">
         <div class="card-header  text-bg-warning  border-warning">{{task.name}}</div>
         <div class="card-body text">
@@ -42,7 +42,7 @@
   <div class="col-3 boarder-sucessCss">
     <h4 style="text-align: center;" class="text-success" >Completed</h4>
     <hr>
-    <div class="mt-4" *ngFor="let task of tasks; index as i ">
+    <div class="mt-4" *ngFor="let task of completedTasks; index as i ">
       <div class="card border-success mb-3" style="max-width: 18rem;">
         <div class="card-header  text-bg-success  border-success">{{task.name}}</div>
         <div class="card-body text-success">

@@ -13,7 +13,8 @@ export class TasksService {
   constructor(private http: HttpClient) { }
   
   getTasks(limit:number, page:number) {
-    return this.http.get<TaskInterface>(this.swaggerURL + 'tasks?limit='+limit +'&page='+page);
+    // return this.http.get<TaskInterface>(this.swaggerURL + 'tasks?limit='+limit +'&page='+page);
+    return this.http.get<TaskInterface>(this.swaggerURL + 'tasks');
   }
 
   postTask(task: Task) {

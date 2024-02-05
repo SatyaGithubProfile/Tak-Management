@@ -3,26 +3,57 @@ const express = require('express')
 const router = express.Router();
 const { Task, validate } = require('../models/tasks');
 const auth = require('../middleware/auth');
+const lodash = require('lodash')
 
 
 
-router.get('/',  async (req, res) => {
-  const tasks = await Task.find().skip(req.query.page).limit(req.query.limit).sort('name');
+router.get('/', async (req, res) => {
   const count = await Task.countDocuments();
 
+  let taskData = {
+    pendingTasks: [],
+    onGoingTasks: [],
+    completedTasks: []
+  }
+
+  const tasks = await Task.find().skip(req.query.page).limit(req.query.limit).sort('name');
+
+  console.log('tasks)=-->', tasks);
+
+  tasks.forEach(
+    (record) => {
+      switch (record.Status) {
+        case 1:
+          taskData.pendingTasks.push(record)
+          break;
+        case 2:
+          taskData.onGoingTasks.push(record)
+          break;
+        case 3:
+          taskData.completedTasks.push(record)
+          break;
+        default:
+          taskData.pendingTasks.push(record);
+      }
+    })
+
+  // console.log('task data--->',taskData)
+
+
   const response = {
-    data: tasks,
+    data: taskData,
     count: count, // Total count of items
   };
-  res.status(200).json(response)
+
+  res.status(200).send(response)
 })
 
 // Create Tasks
-router.post('/', [auth], async (req, res) => {
+router.post('/', async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
-  let task = new Task({ name: req.body.name, comment: req.body.comment });
-  task = await task.save();
+  // let task = new Task({ name: req.body.name, comment: req.body.comment });
+  let task = new Task(lodash.pick(req.body, ['name', 'comment', 'EOD', 'Status', 'assignEmployee']));
   res.send(task);
 });
 

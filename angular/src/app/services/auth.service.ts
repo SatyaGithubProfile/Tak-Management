@@ -6,12 +6,6 @@ interface CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
 }
 
-class UserToken {}
-class Permissions {
-  canActivate(): boolean {
-    return true;
-  }
-}
 @Injectable({
   providedIn: 'root'
 })

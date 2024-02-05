@@ -15,6 +15,9 @@ import { Subscription, skip } from 'rxjs';
 export class TasksComponent implements OnInit, OnDestroy {
   display = "none";
   tasks: Task[] = [];
+  pendingTasks : Task[] = []; 
+  onGoingTasks : Task[] = []; 
+  completedTasks : Task[] = []; 
   editEnable: boolean = false;
   index: number = 0;
   errorMessage: string = '';  // to store the server side error
@@ -52,7 +55,10 @@ export class TasksComponent implements OnInit, OnDestroy {
   getTasks() {
     const skip = this.page === 1 ? 0 : ((this.page - 1) * this.limit);
     this.taskServ.getTasks(this.limit, skip).subscribe((res: TaskInterface) => {
-      this.tasks = res.data;
+      // this.tasks = res.data;
+      this.pendingTasks = res.data.pendingTasks;
+      this.onGoingTasks = res.data.onGoingTasks;
+      this.completedTasks = res.data.completedTasks;
       this.totalRecords = res.count;
       this.alertServ.totalRecordsShare.emit({ totalRecords: this.totalRecords, limit: this.limit });
     },

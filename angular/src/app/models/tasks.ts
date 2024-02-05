@@ -1,6 +1,10 @@
 
 export interface TaskInterface {
-    data:Task[];
+    data: {
+        pendingTasks : Task[];
+        onGoingTasks : Task[];
+        completedTasks : Task[];
+    }
     count : number
 }
 
