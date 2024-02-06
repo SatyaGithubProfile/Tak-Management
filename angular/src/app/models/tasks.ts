@@ -15,12 +15,14 @@ export class Task {
     comment: string;
     assignEmployee : string[] = [];
     Status : number ;
+    EOD : Date;
 
-    constructor(name: string, comment: string, assignEmployee : string[], status : number) {
+    constructor(name: string, comment: string, assignEmployee : string[], status : number, date : Date) {
         this.name = name;
         this.comment = comment;
         this.assignEmployee = assignEmployee;
         this.Status = status;
+        this.EOD = date;
     }
 
 

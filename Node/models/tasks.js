@@ -18,7 +18,7 @@ const taskModel = mongoose.model('Task', new mongoose.Schema({
     EOD : {
         // task End of date
         type : Date,
-        required:true
+        required:true,
     },
     Status: {
         type : Number,

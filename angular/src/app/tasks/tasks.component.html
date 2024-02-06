@@ -72,16 +72,31 @@
       </div>
       <form [formGroup]="taskForm" (ngSubmit)="saveTask()">
         <div class="modal-body">
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Name:</label>
-            <input type="text" class="form-control" id="recipient-name" formControlName="name">
-            <div *ngIf="taskForm.get('name')?.touched">
-              <span *ngIf="taskForm.get('name')?.errors?.['required']" class="text-danger">Name field is
-                required...</span>
-              <span *ngIf="taskForm.get('name')?.errors?.['minlength']" class="text-danger">Must be min 3 char and max
-                20 chars...</span>
+          <div class="row">
+          <div class="col-7">
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Name:</label>
+              <input type="text" class="form-control" id="recipient-name" formControlName="name">
+              <div *ngIf="taskForm.get('name')?.touched">
+                <span *ngIf="taskForm.get('name')?.errors?.['required']" class="text-danger">Name field is
+                  required...</span>
+                <span *ngIf="taskForm.get('name')?.errors?.['minlength']" class="text-danger">Must be min 3 char and max
+                  20 chars...</span>
+              </div>
             </div>
           </div>
+          <div class="col-5">
+            <div class="coc-form">
+              <div class="coc-block-row">
+                <label class="col-form-label" for="dateofbirth">Completion Date:-</label>
+                <div class="coc-block">
+                  <input class="coc-input form-control" formControlName="EOD" type="date" name="EOD">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          
           <div class="form-group">
             <label for="message-text" class="col-form-label">Comment:</label>
             <textarea class="form-control" id="message-text" formControlName="comment"></textarea>

@@ -62,7 +62,8 @@ router.put('/:id', [auth], async (req, res) => {
     name: req.body.name,
     comment: req.body.comment,
     assignEmployee:req.body.assignEmployee,
-    Status : req.body.Status
+    Status : req.body.Status,
+    EOD : req.body.EOD
   }, { new: true });
   if (!task) return res.status(404).send('The Task with the given ID was not found.');
   res.send(task);

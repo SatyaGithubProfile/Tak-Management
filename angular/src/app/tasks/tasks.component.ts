@@ -8,6 +8,7 @@ import { TasksService } from '../services/tasks.service';
 import { Subscription, skip } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { Registration } from '../models/user';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-tasks',
@@ -63,7 +64,8 @@ export class TasksComponent implements OnInit, OnDestroy {
     name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
     comment: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]],
     assigndUsers: this.formBuilder.group({}),
-    status :  []
+    status :  [],
+    EOD : new Date()
   });
 
   getUsersList() {
@@ -125,9 +127,8 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   saveTask(status:number = 1) {
     if (this.editEnable) return this.onEdit();
-    const holdTask = new Task(this.taskForm.value.name || '', this.taskForm.value.comment || '', this.assigneeUsers, 1)
+    const holdTask = new Task(this.taskForm.value.name || '', this.taskForm.value.comment || '', this.assigneeUsers, 1, this.taskForm.value.EOD )
     this.taskServ.postTask(holdTask).subscribe((result) => {
-      console.log('the saved record--->', result)
       this.pendingTasks.unshift(result);
       this.onCloseHandled();
       this.alertServ.successAlert();
@@ -145,20 +146,21 @@ export class TasksComponent implements OnInit, OnDestroy {
     this.taskForm.patchValue({
       name: taskData.name,
       comment: taskData.comment,
-      status : taskData.Status
+      status : taskData.Status || 1,
+      EOD : new DatePipe('en-US').transform(taskData.EOD, 'yyyy-MM-dd')
     });
     this.assigneeUsers = taskData.assignEmployee;
-    this.taskForm.get('status')?.setValue(taskData.Status || 1);
+    // this.taskForm.get('status')?.setValue(taskData.Status || 1);
+    const date =  new DatePipe('en-US').transform(taskData.EOD, 'yyyy-MM-dd')
+    // this.taskForm.get('EOD')?.setValue(date);
     this.selectAssignUsers();
   }
 
   onEdit() {
 
-    const holdTask = new Task(this.taskForm.value.name || '', this.taskForm.value.comment || '', this.assigneeUsers || [],  +this.taskForm.value.status )
-    
-    console.log('index--->', this.index, 'status of task--->', this.statusOfTask, this.pendingTasks[0]._id)
-
-    this.taskServ.updateTask(this.pendingTasks[this.index]._id, holdTask).subscribe(
+    const holdTask = new Task(this.taskForm.value.name || '', this.taskForm.value.comment || '', this.assigneeUsers || [],  +this.taskForm.value.status, this.taskForm.value.EOD )
+    const taskData = this.statusOfTask === 1 ? this.pendingTasks : this.statusOfTask === 2  ? this.onGoingTasks : this.completedTasks ;
+    this.taskServ.updateTask(taskData[this.index]._id, holdTask).subscribe(
       (res) => {
         let taskData = +this.statusOfTask === 1 ? this.pendingTasks  : +this.statusOfTask === 2 ? this.onGoingTasks : this.completedTasks;
          taskData[this.index].name = res.name;
