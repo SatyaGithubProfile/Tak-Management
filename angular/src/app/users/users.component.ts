@@ -22,18 +22,19 @@ export class UsersComponent implements OnInit, OnDestroy {
   page$:Subscription;
 
   constructor(private userServ: UserService, private tokeServ: TokenAttachService, 
-    private formBuilder: FormBuilder,private AlerServ: AlertsService) {
+    private formBuilder: FormBuilder,private alertServ: AlertsService) {
       this.limit$ = this.page$ = Subscription.EMPTY;
      }
 
   ngOnInit(): void {
+    this.alertServ.paginationHide$.next(false);
     this.getAllUsers();
-    this.limit$ = this.AlerServ.limitChange$.pipe(skip(1)).subscribe((inputLimit: number) => {
+    this.limit$ = this.alertServ.limitChange$.pipe(skip(1)).subscribe((inputLimit: number) => {
       this.limit = inputLimit;
       this.getAllUsers();
     });
 
-    this.page$ =this.AlerServ.pageChange$.pipe(skip(1)).subscribe((inputPageNumber: number) => {
+    this.page$ =this.alertServ.pageChange$.pipe(skip(1)).subscribe((inputPageNumber: number) => {
       this.page = inputPageNumber;
       this.getAllUsers();
     })
@@ -49,9 +50,9 @@ export class UsersComponent implements OnInit, OnDestroy {
           this.userForm.addControl(record._id, new FormControl(record.isAdmin));
         });
         this.totalRecords = resp.count;
-        this.AlerServ.totalRecordsShare.emit({ totalRecords: this.totalRecords, limit: this.limit });
+        this.alertServ.totalRecordsShare.emit({ totalRecords: this.totalRecords, limit: this.limit });
       },
-      (err) => this.AlerServ.errorAlert(err.error)
+      (err) => this.alertServ.errorAlert(err.error)
     )
   }
 
@@ -61,14 +62,14 @@ export class UsersComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         if (this.userForm.contains(this.users[index]._id))  this.userForm.get(this.users[index]._id)?.setValue(!this.userForm.get(this.users[index]._id)?.value);
       }, 1000)
-      return this.AlerServ.errorAlert('Only Admin can do this change!');
+      return this.alertServ.errorAlert('Only Admin can do this change!');
     }
     this.userServ.updateRole(this.users[index]._id, change).subscribe(
       (resp) => {
         this.users[index].isAdmin = false;
       },
       (err) => {
-        this.AlerServ.errorAlert(err.error);
+        this.alertServ.errorAlert(err.error);
         if (this.userForm.contains(this.users[index]._id)) this.userForm.get(this.users[index]._id)?.setValue(!this.userForm.get(this.users[index]._id)?.value);
       }
     )
@@ -77,7 +78,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.AlerServ.resetPagination$.next(true);
+    this.alertServ.resetPagination$.next(true);
     this.limit$.unsubscribe();
     this.page$.unsubscribe();
   }

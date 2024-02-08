@@ -11,6 +11,7 @@ export class AlertsService {
   limitChange$ = new BehaviorSubject<number>(5);  // limit per page 
   @Output() totalRecordsShare = new EventEmitter<{totalRecords:number, limit:number}>(); // to share the records and limit count
   resetPagination$ = new Subject();
+  paginationHide$ = new BehaviorSubject<boolean>(false);
   constructor() { }
 
   successAlert() {

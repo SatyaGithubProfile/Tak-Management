@@ -12,13 +12,13 @@ export class TasksService {
 
   constructor(private http: HttpClient) { }
   
-  getTasks(limit:number, page:number) {
+  getTasks(assignedId : String[] = []) {
     // return this.http.get<TaskInterface>(this.swaggerURL + 'tasks?limit='+limit +'&page='+page);
-    return this.http.get<TaskInterface>(this.swaggerURL + 'tasks');
+    return this.http.post<TaskInterface>(this.swaggerURL + 'tasks', {'assignEmployee':assignedId});
   }
 
   postTask(task: Task) {
-    return this.http.post<Task>(this.swaggerURL + 'tasks/', task);
+    return this.http.post<Task>(this.swaggerURL + 'tasks/addTask', task);
   }
 
   updateTask(id: string, task: Task) {

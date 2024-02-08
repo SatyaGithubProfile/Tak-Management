@@ -1,5 +1,5 @@
 import { TaskInterface } from './../models/tasks';
-import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
+import { Component, ElementRef,OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Task } from '../models/tasks';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from '../services/alerts.service';
@@ -33,6 +33,7 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   users :Registration[] = [];
   assigneeUsers : string[] = [];
+  filteredUser : string[] = [];
   isDropdownOpen = false;
   statusOfTask : number = 0;
 
@@ -44,6 +45,7 @@ export class TasksComponent implements OnInit, OnDestroy {
      }
 
   ngOnInit(): void {
+    this.alertServ.paginationHide$.next(true);
     this.getUsersList();
    this.getTasks()
     this.limit$ =this.alertServ.limitChange$.pipe(skip(1)).subscribe((inputLimit: number) => {
@@ -78,23 +80,23 @@ export class TasksComponent implements OnInit, OnDestroy {
     })
   }
 
-  toggleDropdown() {
+  toggleDropdown(position:string) {
     this.isDropdownOpen = !this.isDropdownOpen;
-
-    // Add or remove a CSS class based on the dropdown state
+    const className = position === 'In'  ? 'dropdownInSide' : 'dropdownOutSide';
     if (this.isDropdownOpen) {
-      this.renderer.addClass(this.el.nativeElement.querySelector('.dropdown-menu'), 'show');
+      this.renderer.addClass(this.el.nativeElement.querySelector('.'+className), 'show');
     } else {
-      this.renderer.removeClass(this.el.nativeElement.querySelector('.dropdown-menu'), 'show');
+      this.renderer.removeClass(this.el.nativeElement.querySelector('.'+className), 'show');
     }
   }
 
-  onCheckboxChange(event : Event, userId: any) {
-    if((<HTMLInputElement>event.target).checked) this.assigneeUsers.push(''+userId);
+  onCheckboxChange(event: Event, userId: any, position: string = 'In') {
+    if ((<HTMLInputElement>event.target).checked) position === 'In' ? this.assigneeUsers.push('' + userId) : this.filteredUser.push('' + userId);
     else {
-      this.assigneeUsers.map((user, i) => {
-          if(user === userId)  this.assigneeUsers.splice(i, 1);
-      })
+      const index =  position === 'In' ? this.assigneeUsers.indexOf(userId, 0):  this.filteredUser.indexOf(userId, 0);
+      if (index > -1) {
+         position === 'In' ? this.assigneeUsers.splice(index, 1) : this.filteredUser.splice(index, 1);
+      }
     }
   }
 
@@ -112,7 +114,7 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   getTasks() {
     const skip = this.page === 1 ? 0 : ((this.page - 1) * this.limit);
-    this.taskServ.getTasks(this.limit, skip).subscribe((res: TaskInterface) => {
+    this.taskServ.getTasks(this.filteredUser).subscribe((res: TaskInterface) => {
       this.pendingTasks = res.data.pendingTasks;
       this.onGoingTasks = res.data.onGoingTasks;
       this.completedTasks = res.data.completedTasks;
@@ -187,6 +189,11 @@ export class TasksComponent implements OnInit, OnDestroy {
     )
 
   }
+  
+  filterUsers() {
+    this.getTasks();
+    this.renderer.removeClass(this.el.nativeElement.querySelector('.dropdownOutSide'), 'show');
+  }
 
 
 
@@ -229,7 +236,6 @@ export class TasksComponent implements OnInit, OnDestroy {
       icon: "success"
     });
   }
-
 
   ngOnDestroy(): void {
     this.alertServ.resetPagination$.next(true);

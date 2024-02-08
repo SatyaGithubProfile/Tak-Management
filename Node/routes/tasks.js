@@ -7,16 +7,17 @@ const lodash = require('lodash')
 
 
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
   const count = await Task.countDocuments();
-
+  const assignId = req.body.assignEmployee;
+  const query = assignId.length > 0 ? {'assignEmployee' : { $in : assignId }}  :  {}
   let taskData = {
     pendingTasks: [],
     onGoingTasks: [],
     completedTasks: []
   }
 
-  const tasks = await Task.find().skip(req.query.page).limit(req.query.limit).sort('name');
+  const tasks = await Task.find(query).skip(req.query.page).limit(req.query.limit).sort('name');
 
   tasks.forEach(
     (record) => {
@@ -45,7 +46,7 @@ router.get('/', async (req, res) => {
 })
 
 // Create Tasks
-router.post('/', async (req, res) => {
+router.post('/addTask', async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   // let task = new Task({ name: req.body.name, comment: req.body.comment });

@@ -1,11 +1,18 @@
-.btnCss {
-    position: absolute;
-    right: 20px;
-    top: 63px
-}
 
 .row {
   margin : 0;
+}
+
+.btnCss {
+  position: absolute;
+  right: 20px;
+  top: 63px
+}
+
+.dropDownCss{
+  position: absolute;
+  right: 100px;
+  top: 63px
 }
 
 .boarder-sucessCss {
@@ -17,4 +24,8 @@
 .dropdown-menu {
   max-height: 150px;
   overflow-y: auto;
+}
+
+.boarderCss{
+  border-radius:  0.50rem
 }

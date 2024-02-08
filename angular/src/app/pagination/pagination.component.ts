@@ -14,11 +14,13 @@ export class PaginationComponent implements OnInit {
   pageCount: number[] = [];
   currentPage: number = 1;
   limit: number = 5;
-  limitValue = [5,10,20]
+  limitValue = [5,10,20];
+  paginationHide:boolean = false;
 
   constructor(private alertServ: AlertsService) { }
 
   ngOnInit(): void {
+    this.alertServ.paginationHide$.subscribe((res:boolean) => this.paginationHide = res);
     this.alertServ.resetPagination$.subscribe(() => this.resetPagination());
     this.alertServ.totalRecordsShare.subscribe((res) => {
       this.pageCount = [];

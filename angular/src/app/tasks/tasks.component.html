@@ -1,9 +1,31 @@
-<div class="btnCss">
+
+<div class="dropdown dropDownCss">
+  <button class="btn btn-default border-success dropdown-toggle" type="button" id="dropdownMenuButton"
+    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="toggleDropdown('Out')">
+    Filter Users
+  </button>
+  <div class="dropdown-menu dropdownOutSide" aria-labelledby="dropdownMenuButton">
+    <div *ngFor="let user of users">
+      <label class="dropdown-item">
+        <input type="checkbox" (change)="onCheckboxChange($event, user._id, 'Out')">
+        {{ user.name }}
+      </label>
+    </div>
+    <hr>
+    <div class="col tex-center">
+
+      <button class="btn btn-primary justify-content-center" (click)="filterUsers()" >submit</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="btnCss">  
   <button type="button" class="btn btn-success" (click)="openModal()">Create</button>
 </div>
 <div class="row">
 
-  <div class="col-3 boarder-sucessCss">
+  <div class="col-3 boarder-sucessCss boarderCss">
     <h4 style="text-align: center;" class="text-danger" >Pending</h4>
     <hr>
     <div class="mt-4" *ngFor="let task of pendingTasks; index as i ">
@@ -21,7 +43,7 @@
     </div>
   </div>
 
-  <div class="col-3 boarder-sucessCss">
+  <div class="col-3 boarder-sucessCss boarderCss">
     <h4 style="text-align: center;" class="text-warning" >On-Going</h4>
     <hr>
     <div class="mt-4" *ngFor="let task of onGoingTasks; index as i ">
@@ -39,7 +61,7 @@
     </div>
   </div>
 
-  <div class="col-3 boarder-sucessCss">
+  <div class="col-3 boarder-sucessCss boarderCss">
     <h4 style="text-align: center;" class="text-success" >Completed</h4>
     <hr>
     <div class="mt-4" *ngFor="let task of completedTasks; index as i ">
@@ -114,10 +136,10 @@
               <!-- multi-select-dropdown.component.html -->
               <div class="dropdown"  formGroupName="assigndUsers">
                 <button class="btn btn-default border-success dropdown-toggle" type="button" id="dropdownMenuButton"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="toggleDropdown()">
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="toggleDropdown('In')">
                   Assign Users
                 </button>
-                <div class="dropdown-menu" [ngClass]="{ 'show': isDropdownOpen }" aria-labelledby="dropdownMenuButton">
+                <div class="dropdown-menu dropdownInSide" aria-labelledby="dropdownMenuButton">
                   <div *ngFor="let user of users">
                     <label class="dropdown-item">
                       <input type="checkbox" (change)="onCheckboxChange($event, user._id)" formControlName="{{user._id}}" checked>
