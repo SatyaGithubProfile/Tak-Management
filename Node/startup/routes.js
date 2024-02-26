@@ -4,6 +4,7 @@ const users = require('../routes/users');
 const cart = require('../routes/shopping/cart');
 const products = require('../routes/shopping/products');
 const customers = require('../routes/shopping/customers');
+const wishlist = require('../routes/shopping/wishlist');
 
 
 module.exports = function (app) {
@@ -12,6 +13,7 @@ module.exports = function (app) {
     app.use('/tasks', tasks);
     app.use('/cart', cart );  
     app.use('/products', products );  
-    app.use('/', customers );  
+    app.use('/customers', customers );  
+    app.use('/', wishlist );  
 
 }
