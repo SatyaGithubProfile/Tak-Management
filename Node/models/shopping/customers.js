@@ -5,7 +5,7 @@ const Joi = require('joi')
 const Customers = sequelize.define('Customers', {
     // Model attributes are defined here
     CustomerId: {
-        type: DataTypes.INTEGER(100),
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
 
@@ -55,6 +55,7 @@ const Customers = sequelize.define('Customers', {
 
 // Sync the model with the database
 Customers.sync({ force: false, alter: true }).then(() => {
+
     console.log('Customers table created!');
     sequelize.query('ALTER TABLE Customers AUTO_INCREMENT = 100;');
 }).catch(err => {
