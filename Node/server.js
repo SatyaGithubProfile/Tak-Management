@@ -3,7 +3,7 @@ const app = express();
 app.use(express.json());
 const cors = require('cors');
 app.use(cors()); // To solve the cors error while running the server & client is running local-machine
-// require('./startup/db')();  // Connect mongo Db
+require('./startup/db')();  // Connect mongo Db
 // require('./startup/sqldb')();  // To connect SQL DB
 require('./startup/routes')(app);  // to initialize the routes
 

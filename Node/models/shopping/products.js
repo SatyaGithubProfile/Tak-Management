@@ -26,6 +26,10 @@ const Products = sequelize.define('Products', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    Category: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     Stock: {
         type: DataTypes.BIGINT,
         allowNull: false
@@ -36,6 +40,6 @@ const Products = sequelize.define('Products', {
     }
 });
 
-Products.sync();
+Products.sync({force:true}).then((result) => console.log('PROODUCTS Table created!'), (error) => console.log("PRODUCTS table creation Error-->", error)); 
 
 module.exports = Products;
