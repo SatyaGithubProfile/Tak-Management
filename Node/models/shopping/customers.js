@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../startup/sqldb');
+const Joi = require('joi')
 
 const Customers = sequelize.define('Customers', {
     // Model attributes are defined here
@@ -11,7 +12,8 @@ const Customers = sequelize.define('Customers', {
     },
     Email: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     Password: {
         type: DataTypes.STRING,
@@ -27,7 +29,8 @@ const Customers = sequelize.define('Customers', {
     },
     MobileNumber: {
         type: DataTypes.BIGINT,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     Address: {
         type: DataTypes.STRING,
@@ -51,11 +54,26 @@ const Customers = sequelize.define('Customers', {
 
 
 // Sync the model with the database
-Customers.sync({ force: false }).then(() => {
+Customers.sync({ force: false, alter: true }).then(() => {
     console.log('Customers table created!');
     sequelize.query('ALTER TABLE Customers AUTO_INCREMENT = 100;');
-  }).catch(err => {
+}).catch(err => {
     console.error('Error syncing CUSTOMERS table:', err);
-  });
+});
 
-module.exports = Customers;
+
+function validateTask(customer) {
+    const schema = Joi.object({
+        Email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
+        Password: Joi.string().min(5).max(10).required(),
+        FirstName: Joi.string().min(3).max(10).required(),
+        LastName: Joi.string().min(3).max(10).required(),
+        FirstName: Joi.string().min(3).max(10).required(),
+        MobileNumber: Joi.number().max(9999999999).required(),
+        Address: Joi.string().min(3).max(25).required(),
+        Pincode: Joi.number().max(1000000).required()
+    });
+    return schema.validate(customer);
+}
+module.exports.Customers = Customers;
+module.exports.validate = validateTask;
