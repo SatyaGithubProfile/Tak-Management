@@ -27,7 +27,10 @@ router.put('/', async (req, res) => {
     // check the Id existed or not db
 
     const customer = await Customers.findByPk(req.body.id);
-    if (!customer) res.status(400).send(response(400, 'Error', 'Customer not found with the given Id..'));
+    if (!customer) {
+        res.status(400).send(response(400, 'Error', 'Customer not found with the given Id..'));
+        return;
+    }
 
 
     // check data validation
@@ -47,10 +50,27 @@ router.put('/', async (req, res) => {
         // send the error
         res.status(400).send(response(400, 'Error', error.errors[0].message));
     }
+})
 
+router.delete('/', async (req, res) => {
+    // check the customer available with the customer
+    const customer = await Customers.findByPk(req.body.id);
+    if (!customer) {
+        res.status(400).send(response(400, 'Error', 'Customer not found with the given Id..'));
+        return;
+    }
 
-
-
+    // remove from the db 
+    try {
+        await Customers.destroy({
+            where: { CustomerId: req.body.id }
+        });
+        res.send(response(200, 'Success', [], 1));
+    }
+    catch (error) {
+        // error handle
+        res.status(400).send(response(400, 'Error', error.errors[0].message));
+    }
 
 })
 
