@@ -13,6 +13,9 @@ import { AuthService } from './services/auth.service';
 import { TokenAttachService } from './services/token-attach.service';
 import { UsersComponent } from './users/users.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { ProductsComponent } from './shopping/products/products.component';
+import { ShoppingComponent } from './shopping/shopping/shopping.component';
+import { CustomersComponent } from './shopping/customers/customers.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { PaginationComponent } from './pagination/pagination.component';
     SideNavComponent,
     LoginComponent,
     UsersComponent,
-    PaginationComponent
+    PaginationComponent,
+    ProductsComponent,
+    ShoppingComponent,
+    CustomersComponent
   ],
   imports: [
     BrowserModule,
