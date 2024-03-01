@@ -25,22 +25,19 @@ router.get('/', async (req, res) => {
 
 router.put('/', async (req, res) => {
     // check the Id existed or not db
+    const customer = await Customers.findByPk(req.body.CustomerId);
 
-    const customer = await Customers.findByPk(req.body.id);
     if (!customer) {
         res.status(400).send(response(400, 'Error', 'Customer not found with the given Id..'));
         return;
     }
 
-
     // check data validation
-    const { error } = validate(req.body.data);
+    const { error } = validate(lodash.pick(req.body, ['Email', 'Password', 'FirstName', 'LastName', 'MobileNumber', 'Address', 'Pincode']));
     if (error) return res.status(400).send(response(400, 'Error', error.details[0].message));
-
-    //update to DB
     try {
-        await Customers.update(req.body.data, {
-            where: { CustomerId: req.body.id }
+        await Customers.update(lodash.pick(req.body, [ 'Email' , 'Password', 'FirstName', 'LastName', 'MobileNumber', 'Address', 'Pincode', 'IsAdmin']), {
+            where: { CustomerId: req.body.CustomerId }
         });
 
         //send the response

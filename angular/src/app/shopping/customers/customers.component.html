@@ -5,36 +5,39 @@
     </div>
 </div>
 <div class="row">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>twitter</td>
-            </tr>
-        </tbody>
-    </table>
+    <form >
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">MobileNumber</th>
+                    <th scope="col">Pincode</th>
+                    <th scope="col">Admin</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let customer of customerList; index as i">
+                    <th scope="row"> {{i + 1}} </th>
+                    <td> {{customer.FirstName + '' + customer.LastName}} </td>
+                    <td> {{customer.Email}} </td>
+                    <td> {{customer.Pincode}} </td>
+                    <td> {{customer.MobileNumber}} </td>
+                    <td>
+                        <div class="form-check form-switch">
+                            <input (change)="roleChange(customer.IsAdmin,  customer.CustomerId)" [checked]=customer.IsAdmin
+                                class="form-check-input" type="checkbox" role="switch" >
+                        </div>
+                    </td>
+                    <td> Acctions </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </form>
 </div>
 
 
@@ -108,7 +111,8 @@
                                             <div *ngIf="customersForm.get('mobileNumber')?.touched">
                                                 <span *ngIf="customersForm.get('mobileNumber')?.errors?.['required']"
                                                     class="text-danger">Mobile Number field is required...</span>
-                                                    <span *ngIf="customersForm.get('mobileNumber')?.errors?.['minlength'] || customersForm.get('mobileNumber')?.errors?.['maxlength']"
+                                                <span
+                                                    *ngIf="customersForm.get('mobileNumber')?.errors?.['minlength'] || customersForm.get('mobileNumber')?.errors?.['maxlength']"
                                                     class="text-danger">Mobile number must be 10 numbers...</span>
                                             </div>
                                         </div>
@@ -118,9 +122,10 @@
                                             <div *ngIf="customersForm.get('pincode')?.touched">
                                                 <span *ngIf="customersForm.get('pincode')?.errors?.['required']"
                                                     class="text-danger">Pincode field is required...</span>
-                                                    <span *ngIf="customersForm.get('pincode')?.errors?.['minlength'] || customersForm.get('pincode')?.errors?.['maxlength']"
+                                                <span
+                                                    *ngIf="customersForm.get('pincode')?.errors?.['minlength'] || customersForm.get('pincode')?.errors?.['maxlength']"
                                                     class="text-danger">Must be min 3 char and max 6 numbers...</span>
-                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

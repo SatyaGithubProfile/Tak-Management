@@ -1,3 +1,11 @@
 .modal-dialog {
     width: 92% !important;
 }
+
+.form-check-input:checked {
+    background-color: green;
+}
+
+.form-check-input {
+    cursor: pointer;
+}

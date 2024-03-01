@@ -1,10 +1,10 @@
 export class Customers {
 
     CustomerId !: string;
-    Email: string = '';
-    Password: string = '';
     FirstName: string = '';
     LastName: string = '';
+    Email: string = '';
+    Password: string = '';
     MobileNumber: number = 0;
     Address: string = '';
     Pincode: number = 0;
@@ -21,4 +21,11 @@ export class Customers {
         this.Pincode = Pincode;
     }
 
+}
+
+export interface response {
+    status : number;
+    message : string;
+    count : number;
+    data : any;
 }
