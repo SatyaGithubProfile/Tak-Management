@@ -80,7 +80,6 @@ export class CustomersComponent implements OnInit {
         this.alertServ.errorAlert(error.message);
       }
     )
-
   }
 
   onOpenModal() {
