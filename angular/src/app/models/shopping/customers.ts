@@ -1,6 +1,6 @@
 export class Customers {
 
-    CustomerId !: string;
+    CustomerId !: number;
     FirstName: string = '';
     LastName: string = '';
     Email: string = '';

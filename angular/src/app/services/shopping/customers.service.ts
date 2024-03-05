@@ -22,4 +22,8 @@ export class CustomersService {
     return this.http.put<response>(Environment.swaggerUrl+'customers', data);
   }
 
+  deleteCustomer (id:number) {
+    return this.http.delete<response>(Environment.swaggerUrl+'customers/' + id);
+  }
+
 }

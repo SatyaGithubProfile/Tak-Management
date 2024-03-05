@@ -51,7 +51,7 @@ router.put('/', async (req, res) => {
 
 router.delete('/', async (req, res) => {
     // check the customer available with the customer
-    const customer = await Customers.findByPk(req.body.id);
+    const customer = await Customers.findByPk(req.params.id);
     if (!customer) {
         res.status(400).send(response(400, 'Error', 'Customer not found with the given Id..'));
         return;

@@ -43,8 +43,7 @@ export class CustomersComponent implements OnInit {
   }
 
    // To update the role
-   roleChange(change: boolean, id: string) {
-    this.customerList.find(x => x.CustomerId === id)
+   roleChange(change: boolean, id: number) {
     const index = this.customerList.findIndex(x => x.CustomerId === id);
     this.customerList[index].IsAdmin = !change;
     this.customerServ.updateCustomer(this.customerList[index]).subscribe(
@@ -61,14 +60,26 @@ export class CustomersComponent implements OnInit {
     // console.log('the customers response-->', this.customersForm.value);
     const value = this.customersForm.value;
     const customer = new Customers(value.firstName, value.lastName, value.email, value.password, value.mobileNumber, value.pincode, value.address);
-    console.log('here is the update customer details --->', customer);
     this.customerServ.addCustomers(customer).subscribe((result) => {
-      console.log('Success---', result);
       this.onCloseModal();
     },
       (error) => {
         console.log('adding error', error)
       })
+
+  }
+
+  onDelete(id : number) {
+    const index = this.customerList.findIndex(x => x.CustomerId === id);
+    this.customerServ.deleteCustomer(id).subscribe(
+      (success) => { 
+        this.alertServ.successAlert();
+        this.customerList.splice(index, 1);
+      },
+      (error) => {
+        this.alertServ.errorAlert(error.message);
+      }
+    )
 
   }
 

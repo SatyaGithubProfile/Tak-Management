@@ -22,7 +22,7 @@
 
                 <tr *ngFor="let customer of customerList; index as i">
                     <th scope="row"> {{i + 1}} </th>
-                    <td> {{customer.FirstName + '' + customer.LastName}} </td>
+                    <td> {{customer.FirstName + ' ' + customer.LastName}} </td>
                     <td> {{customer.Email}} </td>
                     <td> {{customer.Pincode}} </td>
                     <td> {{customer.MobileNumber}} </td>
@@ -32,7 +32,9 @@
                                 class="form-check-input" type="checkbox" role="switch" >
                         </div>
                     </td>
-                    <td> Acctions </td>
+                    <td> <i class="bi bi-pencil-square text-success"></i> &nbsp; 
+                         <i (click)="onDelete(customer.CustomerId)" class="bi bi-trash text-danger"></i>
+                    </td>
                 </tr>
 
             </tbody>
