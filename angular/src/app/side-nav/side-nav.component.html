@@ -7,7 +7,7 @@
           <h3>{{name | titlecase }} </h3>
           <p>{{admin | titlecase}} </p>
 
-          <ul class="mt-2" >
+          <ul class="mt-2" *ngIf="navigationSection === 'task'" >
             <li>
                 <a>
                     <span class="icon"><i class="fas fa-home"></i></span>
@@ -56,6 +56,28 @@
                     <span class="item">Settings</span>
                 </a>
             </li> -->
+        </ul>
+
+
+        <ul class="mt-2" *ngIf="navigationSection === 'shopping'" >
+            <li>
+                <a>
+                    <span class="icon"><i class="fas fa-home"></i></span>
+                    <span class="item">Home</span>
+                </a>
+            </li>
+            <li >
+                <a routerLink="task" routerLinkActive="active">
+                    <span class="icon"><i class="bi bi-list-task"></i></span>
+                    <span class="item">Prdocuts</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="users" routerLinkActive="active">
+                    <span class="icon"><i class="bi bi-people-fill"></i></span>
+                    <span class="item">wishlist</span>
+                </a>
+            </li> 
         </ul>
       </div>
       </div>
