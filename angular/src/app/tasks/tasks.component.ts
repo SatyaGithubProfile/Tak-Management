@@ -47,18 +47,7 @@ export class TasksComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.alertServ.paginationHide$.next(true);
     this.getUsersList();
-   this.getTasks()
-    this.limit$ =this.alertServ.limitChange$.pipe(skip(1)).subscribe((inputLimit: number) => {
-      this.page = 1;
-      this.limit = inputLimit;
-      this.getTasks();
-  
-    });
-
-    this.page$ = this.alertServ.pageChange$.pipe(skip(1)).subscribe((inputPageNumber: number) => {
-      this.page = inputPageNumber;
-      this.getTasks();
-    })
+   this.getTasks();
   }
   // assignedUserGroup : FormGroup = this.formBuilder.group({})
 
@@ -113,7 +102,6 @@ export class TasksComponent implements OnInit, OnDestroy {
 
 
   getTasks() {
-    const skip = this.page === 1 ? 0 : ((this.page - 1) * this.limit);
     this.taskServ.getTasks(this.filteredUser).subscribe((res: TaskInterface) => {
       this.pendingTasks = res.data.pendingTasks;
       this.onGoingTasks = res.data.onGoingTasks;

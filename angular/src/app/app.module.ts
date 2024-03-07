@@ -13,9 +13,7 @@ import { AuthService } from './services/auth.service';
 import { TokenAttachService } from './services/token-attach.service';
 import { UsersComponent } from './users/users.component';
 import { PaginationComponent } from './pagination/pagination.component';
-import { ProductsComponent } from './shopping/products/products.component';
-import { ShoppingComponent } from './shopping/shopping/shopping.component';
-import { CustomersComponent } from './shopping/customers/customers.component';
+import { ShoppingModule } from './shopping/shopping.module';
 
 @NgModule({
   declarations: [
@@ -26,9 +24,7 @@ import { CustomersComponent } from './shopping/customers/customers.component';
     LoginComponent,
     UsersComponent,
     PaginationComponent,
-    ProductsComponent,
-    ShoppingComponent,
-    CustomersComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -36,6 +32,7 @@ import { CustomersComponent } from './shopping/customers/customers.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    ShoppingModule
   ],
   providers: [
     provideClientHydration(),

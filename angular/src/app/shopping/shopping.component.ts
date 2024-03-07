@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShoppingComponent implements OnInit {
   ngOnInit(): void {
-    localStorage.setItem('shopping', 'true');
+    // localStorage.setItem('shopping', 'true');
   }
 
 }

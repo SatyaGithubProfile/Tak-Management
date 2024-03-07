@@ -12,7 +12,8 @@ export class SideNavComponent implements OnInit {
    admin : string = '';
    navigationSection :string = 'shopping'
   ngOnInit(): void {
-   this.data = localStorage.getItem('data') || '';
+
+   this.data = (typeof localStorage !== 'undefined')  ?  localStorage.getItem('data') || ''  : '';
    this.name = JSON.parse(this.data).name;
    this.admin = JSON.parse(this.data).isAdmin ? 'Admin' : 'User';
   }

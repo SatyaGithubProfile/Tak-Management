@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     this.userServ.navHide$.subscribe((result) => this.navHide = result);
   }
   ngOnInit(): void {
-    if (localStorage.getItem('token') && localStorage.getItem('token') !== null) this.navHide = true;
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('token') && localStorage.getItem('token') !== null) this.navHide = true;
   }
 
 }

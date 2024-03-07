@@ -33,9 +33,6 @@ export class CustomersComponent implements OnInit {
   getAllCustomers() {
     this.customerServ.getCustomers().subscribe((result: response ) => {
       this.customerList = result.data;
-      setTimeout(() => {
-        console.log(this.customerList);
-      }, 100);
     },
     (error) => {
       console.log('while gettting the CUstomers ERROR--->',error)
@@ -57,7 +54,6 @@ export class CustomersComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log('the customers response-->', this.customersForm.value);
     const value = this.customersForm.value;
     const customer = new Customers(value.firstName, value.lastName, value.email, value.password, value.mobileNumber, value.pincode, value.address);
     this.customerServ.addCustomers(customer).subscribe((result) => {

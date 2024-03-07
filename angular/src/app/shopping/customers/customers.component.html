@@ -134,7 +134,7 @@
                                 <br>
                                 <div class="form-group ">
                                     <label>Address</label>
-                                    <textarea class="form-control" formControlName="address"> </textarea>
+                                    <!-- <textarea class="form-control" formControlName="address"> {{customerList.length !== 0 ?  customerList[0].Address  : ''}} </textarea> -->
                                     <div *ngIf="customersForm.get('address')?.touched">
                                         <span *ngIf="customersForm.get('address')?.errors?.['required']"
                                             class="text-danger">Address field is required...</span>

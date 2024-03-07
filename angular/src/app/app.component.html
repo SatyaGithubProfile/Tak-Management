@@ -3,18 +3,12 @@
     <app-top-nav></app-top-nav>
   </div>
   <div class="row">
-    <div>
       <div class="col-2" *ngIf="navHide">
         <app-side-nav></app-side-nav>
       </div>
-      <div class="col">
-        <!-- <app-pagination [hideFeature]="navHide"></app-pagination> -->
-        <app-shopping></app-shopping>
+      <div class="col" style="margin-right: 19px;">
+        <app-pagination [hideFeature]="navHide"></app-pagination>
+        <!-- <router-outlet></router-outlet> -->
       </div>
-    </div>
-
-
   </div>
-
-
 </div>

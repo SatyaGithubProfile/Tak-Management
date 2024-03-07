@@ -60,14 +60,15 @@
 
 
         <ul class="mt-2" *ngIf="navigationSection === 'shopping'" >
-            <li>
-                <a>
+            <li >
+                <a  routerLink="users">
                     <span class="icon"><i class="fas fa-home"></i></span>
                     <span class="item">Home</span>
                 </a>
             </li>
+            
             <li >
-                <a routerLink="task" routerLinkActive="active">
+                <a  routerLink="products" routerLinkActive="active">
                     <span class="icon"><i class="bi bi-list-task"></i></span>
                     <span class="item">Prdocuts</span>
                 </a>
@@ -78,6 +79,12 @@
                     <span class="item">wishlist</span>
                 </a>
             </li> 
+            <li >
+                <a routerLink="/customers" routerLinkActive="active">
+                    <span class="icon"><i class="bi bi-list-task"></i></span>
+                    <span class="item">Customers</span>
+                </a>
+            </li>
         </ul>
       </div>
       </div>

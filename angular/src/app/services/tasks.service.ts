@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Task, TaskInterface } from '../models/tasks';
 import { Environment } from '../environment';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

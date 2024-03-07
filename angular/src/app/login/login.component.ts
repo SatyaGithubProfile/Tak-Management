@@ -16,7 +16,7 @@ export class LoginComponent implements OnDestroy {
   errorMessage: string = ''
 
   constructor(private userServ: UserService, private router: Router) {
-    if (localStorage.getItem('token')) {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('token')) {
       localStorage.removeItem('token');
       this.userServ.navHide$.next(false);
     }

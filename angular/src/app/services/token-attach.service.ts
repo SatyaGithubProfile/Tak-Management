@@ -16,9 +16,8 @@ export class TokenAttachService implements HttpInterceptor {
 
   constructor() { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    const token = localStorage.getItem('token') || '';
-
+    
+    const token = typeof localStorage !== 'undefined' ? localStorage.getItem('token') || '' : '';
     const authRequest = req.clone({
       setHeaders: {
         'token': token

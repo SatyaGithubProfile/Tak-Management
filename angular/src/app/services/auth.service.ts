@@ -20,6 +20,8 @@ export class AuthService implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean|UrlTree>|Promise<boolean|UrlTree>|boolean|UrlTree {
+    if (typeof localStorage === 'undefined')  return false;
+
    if (!this.isAuthenticated()) {
       // this.router.navigate(['login']);
       this.router.navigate([`login`]);
@@ -31,7 +33,7 @@ export class AuthService implements CanActivate {
    // need to check token available or not?
 
   public isAuthenticated(): boolean {
-    if (localStorage.getItem("token") !== null && localStorage.getItem('token')) return true;
+    if (typeof localStorage !== 'undefined' && localStorage.getItem("token") !== null && localStorage.getItem('token')) return true;
     return false;
   }
 
