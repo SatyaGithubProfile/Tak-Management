@@ -1,0 +1,15 @@
+img {
+    max-height: 144px;
+}
+
+.addCartBtn {
+    width: 188px;
+}
+
+.itemsNumber {
+    margin-left: 28%;
+}
+
+.wishlist {
+    -webkit-text-stroke: 1px;
+}

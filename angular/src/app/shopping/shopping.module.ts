@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-// import { ProductsComponent } from '../products/products.component';
 import { CustomersComponent } from './customers/customers.component';
 import { ProductsComponent } from './products/products.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {  ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { provideClientHydration } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { TokenAttachService } from '../services/token-attach.service';
+import {  HttpClientModule } from '@angular/common/http';
+import { AlertMessageComponent } from './alert-message/alert-message.component';
 
 
 const routes: Routes = [
@@ -21,15 +19,18 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    CustomersComponent
+    CustomersComponent,
+    ProductsComponent,
+    AlertMessageComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   exports: [RouterModule],
+  providers : [
+  ]
 })
 export class ShoppingModule { }

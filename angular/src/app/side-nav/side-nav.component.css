@@ -84,3 +84,9 @@ body{
 .wrapper .sidebar ul li a.active:before{
     display: block;
 }
+
+.cartCss {
+    height: 13px;
+    width: 34px;
+    margin-left: -68px;
+}

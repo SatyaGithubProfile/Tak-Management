@@ -3,9 +3,15 @@ const sequelize =  require('../../startup/sqldb');
 
  const Cart =  sequelize.define('Cart', {
   // Model attributes are defined here
+  CartID : {
+    type: DataTypes.BIGINT,
+    primaryKey:true,
+    autoIncrement : true,
+  
+  },
   CustomerId: {
     type: DataTypes.BIGINT,
-    allowNull: false
+    allowNull: false,
   },
   ProductID: {
     type: DataTypes.BIGINT,
@@ -33,6 +39,6 @@ const sequelize =  require('../../startup/sqldb');
       }
 });
 
-Cart.sync();
+Cart.sync({force : false});
 
 module.exports = Cart;

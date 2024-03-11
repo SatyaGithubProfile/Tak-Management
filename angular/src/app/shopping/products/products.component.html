@@ -1,1 +1,32 @@
-<p>products works!</p>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    <div class="col-3" *ngFor="let product of allProducts">
+        <div class="card" style="width: 18rem;">
+            <!-- <div class="card-header bg-transparent border-success">Header</div> -->
+            <img [src]="product.ImageURL" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{product.ProductName}} </h5>
+                <p class="card-text">{{product.Description}} </p>
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+            </div>
+            <div class="card-footer bg-transparent border-success">
+                <div class="row">
+                    <div class="col-2" style="margin-top: 6px;">
+                        <span (click)="addToWishlist(product.ProductID)" ><i class="bi bi-bag-heart wishlist" [ngClass]="product.WishList === 'TRUE' ?  'text-danger' : ''" ></i></span>
+                    </div>
+                    <div class="col">
+                        <button *ngIf="product.CartQuantity === 0" class="btn btn-success addCartBtn"
+                            (click)="addToCart(product.ProductID, 0, 1)">Add to Cart</button>
+                        <div *ngIf="product.CartQuantity !== 0">
+                            <button class="btn btn-danger" (click)="addToCart(product.ProductID, product.CartQuantity, 0)">-</button>
+                            <span class="itemsNumber"> {{product.CartQuantity}} </span>
+                            <button class="btn btn-success" style="float: right;"
+                                (click)="addToCart(product.ProductID, product.CartQuantity, 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-alert-message></app-alert-message>

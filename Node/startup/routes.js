@@ -14,6 +14,6 @@ module.exports = function (app) {
     app.use('/cart', cart );  
     app.use('/products', products );  
     app.use('/customers', customers );  
-    app.use('/', wishlist );  
+    app.use('/wishlist', wishlist );  
 
 }

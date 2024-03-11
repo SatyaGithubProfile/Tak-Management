@@ -26,6 +26,6 @@ export class Customers {
 export interface response {
     status : number;
     message : string;
-    count : number;
     data : any;
+    count : number;
 }

@@ -4,8 +4,9 @@ const sequelize = require('../../startup/sqldb');
 const Products = sequelize.define('Products', {
     // Model attributes are defined here
     ProductID: {
-        type: DataTypes.BIGINT,
-        allowNull: false
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
     },
     ProductName: {
         type: DataTypes.STRING,
@@ -40,6 +41,6 @@ const Products = sequelize.define('Products', {
     }
 });
 
-Products.sync({force:true}).then((result) => console.log('PROODUCTS Table created!'), (error) => console.log("PRODUCTS table creation Error-->", error)); 
+Products.sync({force:false}).then((result) => console.log('PROODUCTS Table created!'), (error) => console.log("PRODUCTS table creation Error-->", error)); 
 
 module.exports = Products;

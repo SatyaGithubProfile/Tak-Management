@@ -25,7 +25,7 @@ const sequelize =  require('../../startup/sqldb');
       }
 });
 
-Wishlist.sync({force:true,  alter: true }).then(() => {
+Wishlist.sync({force: false,  alter: true }).then(() => {
     console.log('WishList table created!')
 },
 (error) => console.log('Error while creating the WISHLIST  Table', error));
