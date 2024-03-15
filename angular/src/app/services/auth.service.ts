@@ -13,6 +13,8 @@ interface CanActivate {
 
 export class AuthService implements CanActivate {
 
+  
+
   constructor(private router : Router ) {
   }
 

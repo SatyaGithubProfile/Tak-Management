@@ -10,10 +10,10 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'task',  component: TasksComponent, canActivate:[AuthService] },
   { path: 'users',  component: UsersComponent, canActivate:[AuthService] },
-  // {
-  //   path: 'shopping',
-  //   loadChildren: () => import('./shopping/shopping.module').then(m => m.ShoppingModule)
-  //  },
+  {
+    path: 'shopping',
+    loadChildren: () => import('./shopping/shopping.module').then(m => m.ShoppingModule)
+   },
   { path: '**', redirectTo: 'login' }
 
 

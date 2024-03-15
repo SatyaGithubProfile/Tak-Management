@@ -40,6 +40,8 @@ export class ProductsComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.alertServ.sideNavUpdate$.next('shopping');
+    
     this.getProducts();
   }
 

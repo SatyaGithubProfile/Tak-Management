@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { loginModel } from '../models/user';
+import { AlertsService } from '../services/alerts.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -11,8 +12,11 @@ export class SideNavComponent implements OnInit {
    name :string = '';
    admin : string = '';
    navigationSection :string = 'shopping'
+   constructor(private alertServ:AlertsService) {}
   ngOnInit(): void {
 
+    this.alertServ.sideNavUpdate$.subscribe((result) => this.navigationSection = result);
+    
    this.data = (typeof localStorage !== 'undefined')  ?  localStorage.getItem('data') || ''  : '';
    this.name = JSON.parse(this.data).name;
    this.admin = JSON.parse(this.data).isAdmin ? 'Admin' : 'User';

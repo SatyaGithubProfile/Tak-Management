@@ -12,6 +12,7 @@ export class AlertsService {
   @Output() totalRecordsShare = new EventEmitter<{totalRecords:number, limit:number}>(); // to share the records and limit count
   resetPagination$ = new Subject();
   paginationHide$ = new BehaviorSubject<boolean>(false);
+  sideNavUpdate$ = new BehaviorSubject<string>('tasks');
   constructor() { }
 
   successAlert() {

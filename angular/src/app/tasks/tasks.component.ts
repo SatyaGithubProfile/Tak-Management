@@ -45,6 +45,7 @@ export class TasksComponent implements OnInit, OnDestroy {
      }
 
   ngOnInit(): void {
+    this.alertServ.sideNavUpdate$.next('tasks');
     this.alertServ.paginationHide$.next(true);
     this.getUsersList();
    this.getTasks();
