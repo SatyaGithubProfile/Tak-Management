@@ -11,7 +11,7 @@ import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
 import { TokenAttachService } from './services/token-attach.service';
-import { UsersComponent } from './users/users.component';
+import { UsersComponent } from './top-nav/users/users.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { ShoppingModule } from './shopping/shopping.module';
 

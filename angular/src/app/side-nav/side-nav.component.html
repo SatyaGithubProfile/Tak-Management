@@ -15,13 +15,13 @@
                 </a>
             </li> -->
             <li >
-                <a  routerLink="task"  routerLinkActive="active">
+                <a  [routerLink]="['tasks', 'task']"  routerLinkActive="active">
                     <span class="icon"><i class="bi bi-list-task"></i></span>
                     <span class="item">Tasks</span>
                 </a>
             </li>
             <li>
-                <a routerLink="users" routerLinkActive="active">
+                <a  [routerLink]="['tasks', 'users']" routerLinkActive="active">
                     <span class="icon"><i class="bi bi-people-fill"></i></span>
                     <span class="item">People</span>
                 </a>
@@ -68,7 +68,7 @@
             </li> -->
             
             <li >
-                <a  routerLink="shopping/products" routerLinkActive="active">
+                <a [routerLink]="['shopping', 'products']" routerLinkActive="active">
                     <span class="icon"><i class="bi bi-list-task"></i></span>
                     <span class="item">Prdocuts</span>
                 </a>
@@ -80,7 +80,7 @@
                 </a>
             </li> 
             <li >
-                <a routerLink="shopping/customers" routerLinkActive="active">
+                <a [routerLink]="['shopping', 'customers']" routerLinkActive="active">
                     <span class="icon"><i class="bi bi-list-task"></i></span>
                     <span class="item">Customers</span>
                 </a>

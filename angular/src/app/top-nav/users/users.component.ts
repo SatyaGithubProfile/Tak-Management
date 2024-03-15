@@ -1,8 +1,8 @@
-import { AlertsService } from './../services/alerts.service';
+import { AlertsService } from '../../services/alerts.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Registration, UserInterface } from '../models/user';
-import { UserService } from '../services/user.service';
-import { TokenAttachService } from '../services/token-attach.service';
+import { Registration, UserInterface } from '../../models/user';
+import { UserService } from '../../services/user.service';
+import { TokenAttachService } from '../../services/token-attach.service';
 import { Subscription, skip } from 'rxjs';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 

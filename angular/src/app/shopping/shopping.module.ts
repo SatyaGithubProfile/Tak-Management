@@ -14,6 +14,7 @@ const routes: Routes = [
   // { path: '', component: CustomersComponent },
   { path: 'customers', component: CustomersComponent, canActivate:[AuthService] },
   { path: 'products', component: ProductsComponent },
+  {path : '',  redirectTo : 'products', pathMatch : 'full'},
   // { path: '**', redirectTo : '', pathMatch: 'full' },
 ];
 
