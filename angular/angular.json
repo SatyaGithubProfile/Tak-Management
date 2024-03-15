@@ -105,7 +105,8 @@
             ],
             "scripts": []
           }
-        }
+        },
+        "externalDependencies":[""]
       }
     }
   }
