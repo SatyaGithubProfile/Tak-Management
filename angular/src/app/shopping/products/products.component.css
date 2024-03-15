@@ -13,3 +13,14 @@ img {
 .wishlist {
     -webkit-text-stroke: 1px;
 }
+
+.modal-content {
+    width: 743px;
+    right: 103px;
+}
+
+.img-fluid {
+    border-radius: 12px;
+    height: 113px;
+    margin-left: 62px;
+}

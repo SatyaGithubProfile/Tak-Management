@@ -1,12 +1,13 @@
+import { Products } from './../../models/shopping/products';
 import { Component, OnInit } from '@angular/core';
 import { AlertsService } from '../../services/alerts.service';
-import { Products } from '../../models/shopping/products';
 import { ProductsService } from '../../services/shopping/products.service';
 import { response } from '../../models/shopping/customers';
 import { Cart } from '../../models/shopping/cart';
 import { CartService } from '../../services/shopping/cart.service';
 import { WishlistService } from '../../services/shopping/wishlist.service';
 import { error } from 'console';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-products',
@@ -16,12 +17,27 @@ import { error } from 'console';
 export class ProductsComponent implements OnInit {
 
   allProducts: Products[] = [];
+  display!: string;
+  category : any = [
+    {id:1, category : 'Burger'},
+    {id:2, category : 'Pizza'},
+    {id:3, category : 'Biriyani'},
+  ]
 
   constructor(private alertServ: AlertsService, private productServ: ProductsService,
-    private cartServ: CartService, private wishlistServ: WishlistService) {
+    private cartServ: CartService, private wishlistServ: WishlistService, private formBuilder : FormBuilder) {
     this.alertServ.paginationHide$.next(true);
   }
 
+  productForm : FormGroup = this.formBuilder.group({
+    name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+    price: ['', [Validators.required,  Validators.pattern("^[0-9]*$")]],
+    discount: ['', [Validators.required,  Validators.pattern("^[0-9]*$")]] ,
+    imageURL :  ['', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]],
+    description : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+    category : ['', [Validators.required]],
+    stock :['', [Validators.required,  Validators.pattern("^[0-9]*$")]] 
+  });
 
   ngOnInit(): void {
     this.getProducts();
@@ -79,6 +95,30 @@ export class ProductsComponent implements OnInit {
       }
     );
 
+  }
+
+  onSubmit() {
+    console.log(this.productForm);
+    const value = this.productForm.value;
+    const product = new Products(value.name, value.price, value.discount, value.imageURL, value.description, value.category, value.stock);
+    this.productServ.addProdcut(product).subscribe(
+      (result) => { 
+        result.data.Wishlist = "FALSE";
+        console.clear();
+        console.log('the result--->', result);
+        this.allProducts.push(result.data);
+        this.onCloseHandled();
+        this.productServ.alertMessage$.next({message : 'Successfully, Product added!', status : true})
+      },
+      (error) => console.log(error)
+    )
+  }
+
+  openModal() {
+    this.display = "block";
+  }
+  onCloseHandled() {
+    this.display = "none";
   }
 
 

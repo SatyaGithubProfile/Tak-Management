@@ -7,8 +7,11 @@ const sequelize = require('../../startup/sqldb');
 
 
 router.post('/', async (req, res) => {
-   const result = await Product.create(lodash.pick(req.body, ['ProductName','Price','Discount','ImageURL','Category','Description','Stock'] ));
-   res.send(result);
+    console.log('product from frontend--->', req.body)
+   let result = await Product.create(lodash.pick(req.body, ['ProductName','Price','Discount','ImageURL','Category','Description','Stock'] ));
+   result['WishList'] = "FALSE";
+   console.log('result--->',result)
+   res.send(response(200, 'Success', result, 1));
 
 })
 
