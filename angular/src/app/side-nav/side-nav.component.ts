@@ -20,6 +20,9 @@ export class SideNavComponent implements OnInit {
         this.navigationSection = result
       }, 100);
     });
+    setTimeout(() => {
+      this.navigationSection = localStorage.getItem('navigation') || 'tasks';
+    }, 100);
 
     this.data = (typeof localStorage !== 'undefined') ? localStorage.getItem('data') || '' : '';
     this.name = JSON.parse(this.data).name;

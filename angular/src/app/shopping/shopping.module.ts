@@ -7,6 +7,7 @@ import {  ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import {  HttpClientModule } from '@angular/common/http';
 import { AlertMessageComponent } from './alert-message/alert-message.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   // { path: '', component: CustomersComponent },
   { path: 'customers', component: CustomersComponent, canActivate:[AuthService] },
   { path: 'products', component: ProductsComponent },
+  { path: 'wishlist', component: WishlistComponent },
   {path : '',  redirectTo : 'products', pathMatch : 'full'},
   // { path: '**', redirectTo : '', pathMatch: 'full' },
 ];
@@ -22,7 +24,8 @@ const routes: Routes = [
   declarations: [
     CustomersComponent,
     ProductsComponent,
-    AlertMessageComponent
+    AlertMessageComponent,
+    WishlistComponent
   ],
   imports: [
     CommonModule,

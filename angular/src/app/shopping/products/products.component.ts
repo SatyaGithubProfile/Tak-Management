@@ -27,6 +27,7 @@ export class ProductsComponent implements OnInit {
   constructor(private alertServ: AlertsService, private productServ: ProductsService,
     private cartServ: CartService, private wishlistServ: WishlistService, private formBuilder : FormBuilder) {
     this.alertServ.paginationHide$.next(true);
+    localStorage.setItem('navigation', 'shopping');
   }
 
   productForm : FormGroup = this.formBuilder.group({
@@ -41,7 +42,6 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.alertServ.sideNavUpdate$.next('shopping');
-    
     this.getProducts();
   }
 
