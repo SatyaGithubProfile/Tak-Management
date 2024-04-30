@@ -13,6 +13,8 @@ export class AlertsService {
   resetPagination$ = new Subject();
   paginationHide$ = new BehaviorSubject<boolean>(false);
   sideNavUpdate$ = new BehaviorSubject<string>('tasks');
+  alertMessage$  = new BehaviorSubject<{message : string, status : boolean}>({message : '', status : true});
+
   constructor() { }
 
   successAlert() {

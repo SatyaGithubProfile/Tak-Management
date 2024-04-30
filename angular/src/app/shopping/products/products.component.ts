@@ -70,11 +70,11 @@ export class ProductsComponent implements OnInit {
         (result) => {
           console.log('added to cart product-->', productId, ' Count -->', count);
           const msg = status === 1 ? 'Successfully added to cart...' : 'Removed the item from cart...';
-          this.productServ.alertMessage$.next({ message: msg, status: status === 1 ? true : false })
+          this.alertServ.alertMessage$.next({ message: msg, status: status === 1 ? true : false })
         },
         (error) => {
           console.log('Error while adding to cart-->', error);
-          this.productServ.alertMessage$.next({ message: 'Error while updating cart items...Try again...', status: false })
+          this.alertServ.alertMessage$.next({ message: 'Error while updating cart items...Try again...', status: false })
         }
       )
       console.log('cart value---', cart);
@@ -90,10 +90,10 @@ export class ProductsComponent implements OnInit {
       (result) => {
         console.log('success result -->', result);
         const message = this.allProducts[index].WishList === "TRUE" ? 'Successfully. Added item to wishlist...' : 'Removed item from wishlist...';
-        this.productServ.alertMessage$.next({ message: message, status: this.allProducts[index].WishList === "TRUE" ? true : false })
+        this.alertServ.alertMessage$.next({ message: message, status: this.allProducts[index].WishList === "TRUE" ? true : false })
       },
       (error) => {
-        this.productServ.alertMessage$.next({ message: 'Error while updating wishlist... Try Again...', status: false })
+        this.alertServ.alertMessage$.next({ message: 'Error while updating wishlist... Try Again...', status: false })
       }
     );
 
@@ -110,7 +110,7 @@ export class ProductsComponent implements OnInit {
         console.log('the result--->', result);
         this.allProducts.push(result.data);
         this.onCloseHandled();
-        this.productServ.alertMessage$.next({message : 'Successfully, Product added!', status : true})
+        this.alertServ.alertMessage$.next({message : 'Successfully, Product added!', status : true})
       },
       (error) => console.log(error)
     )

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsService } from '../../services/shopping/products.service';
 import { skip } from 'rxjs';
+import { AlertsService } from '../../services/alerts.service';
 
 @Component({
   selector: 'app-alert-message',
@@ -13,9 +13,9 @@ export class AlertMessageComponent implements OnInit {
   showErrorPopup = false;
   errorStatus = '';
   settimeout: NodeJS.Timeout | undefined;
-  constructor(private productServ: ProductsService) { }
+  constructor(private alertServ: AlertsService) { }
   ngOnInit(): void {
-    this.productServ.alertMessage$.pipe(skip(1)).subscribe((result) => {
+     this.alertServ.alertMessage$.pipe(skip(1)).subscribe((result) => {
       clearTimeout(this.settimeout);
       this.clearError();
       setTimeout(() => {
