@@ -1,0 +1,172 @@
+<button class="btn btn-success col-1" (click)="openModal()">Add</button>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    <div class="col-3" *ngFor="let product of allProducts">
+        <div class="card" style="width: 18rem;">
+            <!-- <div class="card-header bg-transparent border-success">Header</div> -->
+            <img [src]="product.ImageURL" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{product.ProductName}} </h5>
+                <p class="card-text">{{product.Description}} </p>
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+            </div>
+            <div class="card-footer bg-transparent border-success">
+                <div class="row">
+                    <div class="col-2" style="margin-top: 6px;">
+                        <span (click)="addToWishlist(product.ProductID)"><i class="bi bi-bag-heart wishlist"
+                                [ngClass]="product.WishList === 'TRUE' ?  'text-danger' : ''"></i></span>
+                    </div>
+                    <div class="col">
+                        <button *ngIf="product.CartQuantity === 0" class="btn btn-success addCartBtn"
+                            (click)="addToCart(product.ProductID, 0, 1)">Add to Cart</button>
+                        <div *ngIf="product.CartQuantity !== 0">
+                            <button class="btn btn-danger"
+                                (click)="addToCart(product.ProductID, product.CartQuantity, 0)">-</button>
+                            <span class="itemsNumber"> {{product.CartQuantity}} </span>
+                            <button class="btn btn-success" style="float: right;"
+                                (click)="addToCart(product.ProductID, product.CartQuantity, 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"> Product </h4>
+                <!-- <button type="button" class="btn-close" aria-label="Close"></button> -->
+                <button type="button" class="btn-close" aria-label="Close" (click)="onCloseHandled()"></button>
+            </div>
+            <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Name :</label>
+                                <input type="text" class="form-control" id="recipient-name" formControlName="name">
+                                <div *ngIf="productForm.get('name')?.touched">
+                                    <span *ngIf="productForm.get('name')?.errors?.['required']" class="text-danger">Name
+                                        field is
+                                        required...</span>
+                                    <span *ngIf="productForm.get('name')?.errors?.['minlength']"
+                                        class="text-danger">Must be min 3 char and max
+                                        20 chars...</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Price :</label>
+                                <input type="number" class="form-control" id="recipient-name" formControlName="price">
+                                <div *ngIf="productForm.get('price')?.touched">
+                                    <span *ngIf="productForm.get('price')?.errors?.['required']"
+                                        class="text-danger">Price field is
+                                        required...</span>
+                                    <span *ngIf="productForm.get('price')?.errors?.['minlength']"
+                                        class="text-danger">Only accepts the numbers...</span>
+                                </div>
+                            </div>
+                            <div class="coc-block">
+                                <label for="recipient-name" class="col-form-label">Image :</label>
+                                <input class="coc-input form-control" #imageURL formControlName="imageURL" type="text"
+                                    placeholder="Enter Image URL Here..." name="imageURL"
+                                    value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmp8uR6jmrSIJZYeNyhBkMRpvBffcj7-gAnQ&usqp=CAU">
+                                <div *ngIf="productForm.get('imageURL')?.touched">
+                                    <span *ngIf="productForm.get('imageURL')?.errors?.['required']"
+                                        class="text-danger">URL field is
+                                        required...</span>
+                                    <span *ngIf="productForm.get('imageURL')?.errors?.['minlength']"
+                                        class="text-danger">Must be max 30 chars...</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-5">
+                            <div class="coc-form">
+                                <label class="col-form-label" for="dateofbirth">Image</label>
+                                <div class="coc-block-row">
+                                    <img [src]="imageURL.value || '../../assets/default_img.jpg'" class="img-fluid"
+                                        alt="Image Here">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Category :</label>
+                                <!-- <input type="number" class="form-control" id="recipient-name"
+                                    formControlName="discount"> -->
+                                    <select class=" form-control form-select form-select-sm" formControlName="category" aria-label=".form-select-sm example">
+                                        <option disabled  selected>Open this select menu</option>
+                                        <option *ngFor="let category of category" [value]="category.id">{{category.category}} </option>
+                                      </select>
+                                <div *ngIf="productForm.get('category')?.touched">
+                                    <span *ngIf="productForm.get('category')?.errors?.['required']"
+                                        class="text-danger">Category field is
+                                        required...</span>
+                                    <span *ngIf="productForm.get('category')?.errors?.['minlength']"
+                                        class="text-danger">Only accepts numbers...</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Discount :</label>
+                                <input type="number" class="form-control" id="recipient-name"
+                                    formControlName="discount">
+                                <div *ngIf="productForm.get('discount')?.touched">
+                                    <span *ngIf="productForm.get('discount')?.errors?.['required']"
+                                        class="text-danger">Discount field is
+                                        required...</span>
+                                    <span *ngIf="productForm.get('discount')?.errors?.['minlength']"
+                                        class="text-danger">Only accepts numbers...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Stock :</label>
+                                <input type="number" class="form-control" id="recipient-name" formControlName="stock">
+                                <div *ngIf="productForm.get('stock')?.touched">
+                                    <span *ngIf="productForm.get('stock')?.errors?.['required']"
+                                        class="text-danger">Stock field is
+                                        required...</span>
+                                    <span *ngIf="productForm.get('stock')?.errors?.['minlength']"
+                                        class="text-danger">Only accepts numbers...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="Description" class="col-form-label">Description :</label>
+                            <textarea class="form-control" formControlName="description"></textarea>
+                            <div *ngIf="productForm.get('description')?.touched">
+                                <span *ngIf="productForm.get('description')?.errors?.['required']" class="text-danger">Description
+                                    field is required...</span>
+                                <span *ngIf="productForm.get('description')?.errors?.['minlength']"
+                                    class="text-danger">Must be max 50 chars...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-8">
+                        <!-- <span *ngIf="errorMessage !== ''" class="text-danger"> {{errorMessage}} </span> -->
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-default" (click)="onCloseHandled()">Close</button> &nbsp;
+                        <button type="submit" class="btn btn-primary" > Save</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<app-alert-message></app-alert-message>

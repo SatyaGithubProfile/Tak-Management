@@ -1,0 +1,29 @@
+<div>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Discount</th>
+            <th scope="col">Price</th>
+            <th scope="col">Actions</th>
+            <!-- <th scope="col">Handle</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let products of listOfProducts; let i = index"   >
+            <th scope="row">{{i + 1}} </th>
+            <td> {{products.ProductName}} </td>
+            <td> {{products.Stock }} </td>
+            <td> {{products.Discount}} % </td>
+            <td> {{products.Price}} /- </td>
+            <td> <i class="bi bi-cart-plus text-success"></i>  &nbsp;&nbsp;  <i class="bi bi-trash text-danger" (click)="removeWishlist(products.ProductID)" ></i></td>
+            <!-- <td> {{ products.}} </td> -->
+            <!-- <td>@mdo</td> -->
+          </tr> 
+        </tbody>
+      </table>
+</div>
+
+<app-alert-message></app-alert-message>

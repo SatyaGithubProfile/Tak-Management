@@ -1,0 +1,177 @@
+
+<div class="dropdown dropDownCss">
+  <button class="btn btn-default border-success dropdown-toggle" type="button" id="dropdownMenuButton"
+    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="toggleDropdown('Out')">
+    Filter Users
+  </button>
+  <div class="dropdown-menu dropdownOutSide" aria-labelledby="dropdownMenuButton">
+    <div *ngFor="let user of users">
+      <label class="dropdown-item">
+        <input type="checkbox" (change)="onCheckboxChange($event, user._id, 'Out')">
+        {{ user.name }}
+      </label>
+    </div>
+    <hr>
+    <div class="col tex-center">
+
+      <button class="btn btn-primary justify-content-center" (click)="filterUsers()" >submit</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="btnCss">  
+  <button type="button" class="btn btn-success" (click)="openModal()">Create</button>
+</div>
+<div class="row">
+
+  <div class="col-3 boarder-sucessCss boarderCss">
+    <h4 style="text-align: center;" class="text-danger" >Pending</h4>
+    <hr>
+    <div class="mt-4" *ngFor="let task of pendingTasks; index as i ">
+      <div class="card border-danger mb-3" style="max-width: 18rem;">
+        <div class="card-header  text-bg-danger  border-danger">{{task.name}}</div>
+        <div class="card-body">
+          <!-- <h5 class="card-title">{{task.name}} </h5> -->
+          <p class="card-text">{{task.comment}}</p>
+        </div>
+        <div class="card-footer bg-transparent border-danger">
+          <span (click)="index = i; deleteAlert(1)" style="float: right;" class="px-2" ><i class="bi bi-trash3-fill text-danger"></i></span>
+          <span (click)="editOpen(i, 1); openModal()" style="float: right;" class="px-2" ><i class="bi bi-pencil-square text-primary"></i></span> &nbsp;
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-3 boarder-sucessCss boarderCss">
+    <h4 style="text-align: center;" class="text-warning" >On-Going</h4>
+    <hr>
+    <div class="mt-4" *ngFor="let task of onGoingTasks; index as i ">
+      <div class="card border-warning mb-3" style="max-width: 18rem;">
+        <div class="card-header  text-bg-warning  border-warning">{{task.name}}</div>
+        <div class="card-body text">
+          <!-- <h5 class="card-title">{{task.name}} </h5> -->
+          <p class="card-text">{{task.comment}}</p>
+        </div>
+        <div class="card-footer bg-transparent border-warning">
+          <span (click)="index = i; deleteAlert(2)"  style="float: right;" class="px-2"><i class="bi bi-trash3-fill text-danger"></i></span>
+          <span (click)="editOpen(i, 2); openModal()"  style="float: right;" class="px-2"><i class="bi bi-pencil-square text-primary"></i></span> &nbsp;
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-3 boarder-sucessCss boarderCss">
+    <h4 style="text-align: center;" class="text-success" >Completed</h4>
+    <hr>
+    <div class="mt-4" *ngFor="let task of completedTasks; index as i ">
+      <div class="card border-success mb-3" style="max-width: 18rem;">
+        <div class="card-header  text-bg-success  border-success">{{task.name}}</div>
+        <div class="card-body text-success">
+          <!-- <h5 class="card-title">{{task.name}} </h5> -->
+          <p class="card-text">{{task.comment}}</p>
+        </div>
+        <div class="card-footer bg-transparent border-success">
+          <span (click)="index = i; deleteAlert(3)"  style="float: right;" class="px-2"><i class="bi bi-trash3-fill text-danger"></i></span>
+          <span (click)="editOpen(i, 3); openModal()"  style="float: right;" class="px-2"><i class="bi bi-pencil-square text-primary"></i></span> &nbsp;
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+
+</div>
+
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{!editEnable ? 'Add ' : 'Edit ' }} Task </h4>
+        <!-- <button type="button" class="btn-close" aria-label="Close"></button> -->
+        <button type="button" class="btn-close" aria-label="Close" (click)="onCloseHandled()"></button>
+      </div>
+      <form [formGroup]="taskForm" (ngSubmit)="saveTask()">
+        <div class="modal-body">
+          <div class="row">
+          <div class="col-7">
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Name:</label>
+              <input type="text" class="form-control" id="recipient-name" formControlName="name">
+              <div *ngIf="taskForm.get('name')?.touched">
+                <span *ngIf="taskForm.get('name')?.errors?.['required']" class="text-danger">Name field is
+                  required...</span>
+                <span *ngIf="taskForm.get('name')?.errors?.['minlength']" class="text-danger">Must be min 3 char and max
+                  20 chars...</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-5">
+            <div class="coc-form">
+              <div class="coc-block-row">
+                <label class="col-form-label" for="dateofbirth">Completion Date:-</label>
+                <div class="coc-block">
+                  <input class="coc-input form-control" formControlName="EOD" type="date" name="EOD">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Comment:</label>
+            <textarea class="form-control" id="message-text" formControlName="comment"></textarea>
+            <div *ngIf="taskForm.get('comment')?.touched">
+              <span *ngIf="taskForm.get('comment')?.errors?.['required']" class="text-danger">Comment field is
+                required...</span>
+              <span *ngIf="taskForm.get('comment')?.errors?.['minlength']" class="text-danger">Must be more than 5
+                chars...</span>
+            </div>
+          </div>
+
+          <br>
+          <div class="row">
+            <div class="col-5">
+              <!-- multi-select-dropdown.component.html -->
+              <div class="dropdown"  formGroupName="assigndUsers">
+                <button class="btn btn-default border-success dropdown-toggle" type="button" id="dropdownMenuButton"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="toggleDropdown('In')">
+                  Assign Users
+                </button>
+                <div class="dropdown-menu dropdownInSide" aria-labelledby="dropdownMenuButton">
+                  <div *ngFor="let user of users">
+                    <label class="dropdown-item">
+                      <input type="checkbox" (change)="onCheckboxChange($event, user._id)" formControlName="{{user._id}}" checked>
+                      {{ user.name }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+          
+            </div>
+          
+            <div class="col-5" *ngIf="editEnable" >
+              <select class="form-select" aria-label="Default select example" formControlName="status">
+                <option value="1" class="text-danger">Pending</option>
+                <option value="2" class="text-warning">OnGoing</option>
+                <option value="3" class="text-success">Completed</option>
+              </select>
+            </div>
+          </div>
+         
+        </div>
+        <div class="modal-footer">
+            <div class="col-8">
+              <span *ngIf="errorMessage !== ''" class="text-danger"> {{errorMessage}} </span>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-default" (click)="onCloseHandled()">Close</button> &nbsp;
+              <button type="submit" class="btn btn-primary"> Save</button>
+            </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

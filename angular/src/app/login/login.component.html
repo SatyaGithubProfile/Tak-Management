@@ -1,0 +1,101 @@
+<div class="bodyCssInside">
+	<div class="containerCss">
+		<input type="checkbox" id="flip">
+		<div class="cover">
+			<div class="front">
+				<img src="../../assets/image.png" alt="">
+				<div class="text">
+					<span class="text-1">Every new friend is a <br> new adventure</span>
+					<span class="text-2">Let's get connected</span>
+				</div>
+			</div>
+			<div class="back">
+				<!--<img class="backImg" src="images/backImg.jpg" alt="">-->
+				<div class="text">
+					<span class="text-1">Complete miles of journey <br> with one step</span>
+					<span class="text-2">Let's get started</span>
+				</div>
+			</div>
+		</div>
+		<div class="forms">
+			<div class="form-content">
+				<div class="login-form">
+					<div class="title">Login</div>
+					<form #loginForm="ngForm">
+						<div class="input-boxes">
+							<div class="input-box">
+								<i class="fas fa-envelope"></i>
+								<input type="email" name="email" placeholder="Enter your email"
+									[(ngModel)]="userDetails.email" placeholder="Email" required>
+							</div>
+							<div class="input-box">
+								<i class="fas fa-lock"></i>
+								<input type="password" name="pswd" [(ngModel)]="userDetails.password"
+									placeholder="Password" placeholder="Enter your password" required>
+							</div>
+							<!-- <div class="text"><a href="#">Forgot password?</a></div> -->
+							<div class="button input-box">
+								<input type="button" value="Sumbit" (click)="login()" [disabled] ="!loginForm.valid" >
+							</div>
+							<div class="errorMsg" *ngIf="errorMessage">
+								<span *ngIf="errorMessage" class="text-danger"> {{errorMessage}}</span>
+							</div>
+							<div class="text sign-up-text">Don't have an account? <label for="flip">Sigup now</label>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="signup-form">
+					<div class="title">Signup</div>
+					<form #regForm="ngForm" (submit)="onSignUp()">
+						<div class="input-boxes">
+							<div class="input-box">
+								<i class="fas fa-user"></i>
+								<input type="text" name="name" [(ngModel)]="registerDetails.name"
+									placeholder="User name" #name="ngModel" minlength="4" required>
+								
+							</div>
+							<div class="errorMsg" *ngIf="regForm.touched">
+								<span class="errorMsg" *ngIf="name.errors?.['required']" class="text-danger">Name
+									field is
+									required...</span>
+								<span *ngIf="name.errors?.['minlength']" class="text-danger"> Min Length would be
+									5chars... </span>
+							</div>
+							<div class="input-box">
+								<i class="fas fa-envelope"></i>
+								<input type="email" name="email" [(ngModel)]="registerDetails.email" placeholder="Email"
+									#email="ngModel" required>
+								
+							</div>
+							<div class="errorMsg" *ngIf="regForm.touched">
+								<span class="errorMsg" *ngIf="email.errors?.['required']" class="text-danger">email
+									field is
+									required...</span>
+							</div>
+							<div class="input-box">
+								<i class="fas fa-lock"></i>
+								<input type="password" name="pswd" [(ngModel)]="registerDetails.password"
+									placeholder="Password" required #pswd="ngModel">
+								
+							</div>
+							<div class="errorMsg" *ngIf="regForm.touched">
+								<span class="errorMsg" *ngIf="pswd.errors?.['required']"
+									class="text-danger">Password field is
+									required...</span>
+							</div>
+							<div class="errorMsg" *ngIf="errorMessage">
+								<span *ngIf="errorMessage" class="text-danger"> {{errorMessage}}</span>
+							</div>
+							<div class="button input-box">
+								<input type="button" value="Sumbit" (click)="login()" [disabled] ="!loginForm.valid" >
+							</div>
+							<div class="text sign-up-text">Already have an account? <label for="flip">Login now</label>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

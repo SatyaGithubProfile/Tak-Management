@@ -1,0 +1,161 @@
+<div class="row">
+    <div class="col-8"> </div>
+    <div class="col">
+        <button class="btn btn-success  " style="float: right;" (click)="onOpenModal()">Add new</button>
+    </div>
+</div>
+<div class="row">
+    <form >
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">MobileNumber</th>
+                    <th scope="col">Pincode</th>
+                    <th scope="col">Admin</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let customer of customerList; index as i">
+                    <th scope="row"> {{i + 1}} </th>
+                    <td> {{customer.FirstName + ' ' + customer.LastName}} </td>
+                    <td> {{customer.Email}} </td>
+                    <td> {{customer.Pincode}} </td>
+                    <td> {{customer.MobileNumber}} </td>
+                    <td>
+                        <div class="form-check form-switch">
+                            <input (change)="roleChange(customer.IsAdmin,  customer.CustomerId)" [checked]=customer.IsAdmin
+                                class="form-check-input" type="checkbox" role="switch" >
+                        </div>
+                    </td>
+                    <td> <i class="bi bi-pencil-square text-success"></i> &nbsp; 
+                         <i (click)="onDelete(customer.CustomerId)" class="bi bi-trash text-danger"></i>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </form>
+</div>
+
+
+<div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form (ngSubmit)="onSubmit()" [formGroup]="customersForm">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add New Customer </h5>
+                        <button type="button" class="btn-close" aria-label="Close" (click)="onCloseModal()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="inputEmail4">First Name</label>
+                                            <input type="text" class="form-control" placeholder="First Name"
+                                                formControlName="firstName">
+                                            <div *ngIf="customersForm.get('firstName')?.touched">
+                                                <span *ngIf="customersForm.get('firstName')?.errors?.['required']"
+                                                    class="text-danger">First Name field is required...</span>
+                                                <span *ngIf="customersForm.get('firstName')?.errors?.['minlength']"
+                                                    class="text-danger">Must be min 3 char and max 20 chars...</span>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label for="inputPassword4">Last Name</label>
+                                            <input type="text" class="form-control" placeholder="Last Name"
+                                                formControlName="lastName">
+                                            <div *ngIf="customersForm.get('lastName')?.touched">
+                                                <span *ngIf="customersForm.get('lastName')?.errors?.['required']"
+                                                    class="text-danger">Last Name field is required...</span>
+                                                <span *ngIf="customersForm.get('lastName')?.errors?.['minlength']"
+                                                    class="text-danger">Must be min 3 char and max 20 chars...</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="inputEmail4">Email</label>
+                                            <input type="email" class="form-control" placeholder="sample@gmail.com"
+                                                formControlName="email">
+                                            <div *ngIf="customersForm.get('email')?.touched">
+                                                <span *ngIf="customersForm.get('email')?.errors?.['required']"
+                                                    class="text-danger">Email field is required...</span>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label for="inputPassword4">Password</label>
+                                            <input type="password" class="form-control" formControlName="password">
+                                            <div *ngIf="customersForm.get('password')?.touched">
+                                                <span *ngIf="customersForm.get('password')?.errors?.['required']"
+                                                    class="text-danger">Password field is required...</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="inputEmail4">Mobile Number</label>
+                                            <input type="email" class="form-control" formControlName="mobileNumber">
+                                            <div *ngIf="customersForm.get('mobileNumber')?.touched">
+                                                <span *ngIf="customersForm.get('mobileNumber')?.errors?.['required']"
+                                                    class="text-danger">Mobile Number field is required...</span>
+                                                <span
+                                                    *ngIf="customersForm.get('mobileNumber')?.errors?.['minlength'] || customersForm.get('mobileNumber')?.errors?.['maxlength']"
+                                                    class="text-danger">Mobile number must be 10 numbers...</span>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label for="inputPassword4">Pincode</label>
+                                            <input type="text" class="form-control" formControlName="pincode">
+                                            <div *ngIf="customersForm.get('pincode')?.touched">
+                                                <span *ngIf="customersForm.get('pincode')?.errors?.['required']"
+                                                    class="text-danger">Pincode field is required...</span>
+                                                <span
+                                                    *ngIf="customersForm.get('pincode')?.errors?.['minlength'] || customersForm.get('pincode')?.errors?.['maxlength']"
+                                                    class="text-danger">Must be min 3 char and max 6 numbers...</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <div class="form-group ">
+                                    <label>Address</label>
+                                    <!-- <textarea class="form-control" formControlName="address"> {{customerList.length !== 0 ?  customerList[0].Address  : ''}} </textarea> -->
+                                    <div *ngIf="customersForm.get('address')?.touched">
+                                        <span *ngIf="customersForm.get('address')?.errors?.['required']"
+                                            class="text-danger">Address field is required...</span>
+                                        <span *ngIf="customersForm.get('address')?.errors?.['minlength']"
+                                            class="text-danger">Must be min 3 char and max 20 chars...</span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            (click)="onCloseModal()">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

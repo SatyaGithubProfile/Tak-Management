@@ -1,0 +1,27 @@
+<div class="limiCss" *ngIf="!paginationHide">
+  <select class="form-select" (change)="changeLimit($event) ">
+    <option [value]="value" [selected]="value == limit" *ngFor="let value of limitValue">{{value}} </option>
+  </select>
+</div>
+<div [ngClass]="hideFeature ? 'bodyCss' : ''" >
+  <router-outlet></router-outlet>
+</div>
+<div *ngIf="!paginationHide">
+  <hr>
+  <div class="entriesMsg" >
+    <span>Showing {{currentPage * limit <= totalRecords ? currentPage * limit : totalRecords }} out of {{totalRecords }} </span>
+  </div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li (click)="pageChanged(currentPage-1, 'P')" class="page-item" [ngClass]="currentPage == 1 ? 'disabled' : ''">
+          <a class="page-link" tabindex="-1">Previous</a>
+        </li>
+        <li *ngFor="let number of pageCount; index as i" class="page-item"><a class="page-link"
+            [ngClass]="{'active': currentPage === i+1}" (click)="pageChanged(i+1, 'NA')"> {{i+1}} </a></li>
+        <li class="page-item" (click)="pageChanged(currentPage+1, 'N')"
+          [ngClass]="currentPage == pageCount[0] ? 'disabled' : ''">
+          <a class="page-link">Next</a>
+        </li>
+      </ul>
+    </nav>
+</div>
